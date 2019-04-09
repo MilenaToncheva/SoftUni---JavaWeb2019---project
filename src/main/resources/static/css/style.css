@@ -1,35 +1,76 @@
-body {
-    background: black;
-}
-
-.body-background {
+.banner-background {
     width: 100%;
-    height: auto;
-    background-size: 100% 100%;
+    height: 300px;
     border: 1px solid red;
 }
+
 
 .navbar-color {
     background: yellow;
 }
 
-
-.nav-color {
+.nav-text-color {
     color: black;
     font-weight: bold;
-    padding: 5px ;
+    padding: 5px;
 }
 
-.nav-color:hover {
+.nav-text-color:hover {
     width: 100%;
-   padding: 5px ;
+    padding: 5px;
     border: 2px black;
     border-radius: 4px;
     background: black;
     color: yellow;
 }
 
+body {
+    background: black;
+}
 
+.mainBody {
+    border-radius: 0 !IMPORTANT;
+    background: #cee802;
+    border: 1px solid red;
+}
+
+.mainBodyText {
+    color: #db3545;
+}
+
+.customHr {
+    width: 10%;
+    height: 1px;
+    background-color: #cee802;
+}
+
+.customButtonRegister {
+    margin-top: 20px;
+    padding: 5px;
+    color: #cee802;
+    font-size: large;
+    font-weight: bolder;
+    min-width: 150px;
+    border: 1px #db3545;
+    border-radius: 5px;
+    background: #DB3545;
+}
+
+.customButtonRegister:hover {
+
+
+    color: #db3545;
+    font-size: large;
+    font-weight: bolder;
+    min-width: 150px;
+    border: 1px #cee802;
+    border-radius: 5px;
+    background: #cee802;
+}
+
+.customErrorMessageColor {
+    color: #cee802;
+}
 .footer-icons {
     font-size: 3em;
     color: #ebebeb;
@@ -45,3 +86,4 @@ body {
     background: #ebebeb !IMPORTANT;
     color: #DB3545 !IMPORTANT;
 }
+
