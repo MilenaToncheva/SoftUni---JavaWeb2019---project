@@ -1,46 +1,47 @@
-/*.re-background {*/
-    /*background: #900C45;*/
-/*}*/
-
-/*nav a{*/
-    /*color: white;*/
-/*}*/
-
-/*.whiteText{*/
-    /*color: white;*/
-/*}*/
-/*.blackText {*/
-    /*color:black;*/
-/*}*/
-/*main div hr{*/
-    /*border-top: white 1px solid;*/
-/*}*/
-
-hr.hr-2 {
-    height: 2px;
+body {
+    background: black;
 }
 
-.logout-button {
-    background: transparent;
-    border: none;
+.body-background {
+    width: 100%;
+    height: auto;
+    background-size: 100% 100%;
+    border: 1px solid red;
+}
+
+.navbar-color {
+    background: yellow;
+}
+
+
+.nav-color {
+    color: black;
     font-weight: bold;
-    color: rgba(0, 0, 0, 1) !important;
+    padding: 5px ;
 }
 
-.logout-button:hover {
-    cursor: pointer;
-}
-
-.logout-button:focus {
-    outline: none;
-}
-
-img.product-image-home {
-    width: 200px;
-    height: 200px;
-    margin: auto;
+.nav-color:hover {
+    width: 100%;
+   padding: 5px ;
+    border: 2px black;
+    border-radius: 4px;
+    background: black;
+    color: yellow;
 }
 
 
+.footer-icons {
+    font-size: 3em;
+    color: #ebebeb;
+    width: 50px;
+    height: 50px;
+    padding: 0 10px;
+    margin: 0 20px;
+    border: 2px solid #ebebeb;
+    border-radius: 5px;
+}
 
-
+.footer-icons:hover {
+    background: #ebebeb !IMPORTANT;
+    color: #DB3545 !IMPORTANT;
+}
