@@ -6,6 +6,7 @@ public final class PizzaCreationViolationMessages {
 
     //////////Pizza
     public static final String PIZZA_INCORRECT_NAME_LENGTH = "Pizza name should be in range 3-20 symbols";
+    public static final String PIZZA_INCORRECT_GRAM_VALUE = "Pizza grams should be more then 0.01";
 
     //////////Ingredient
     public static final String INGREDIENT_INCORRECT_NAME_LENGTH = "Ingredient name should be in range 3-20 symbols";

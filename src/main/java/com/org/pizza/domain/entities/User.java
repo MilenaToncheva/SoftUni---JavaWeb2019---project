@@ -57,7 +57,7 @@ public class User extends BaseEntity implements UserDetails {
     }
 
     @Override
-    @Column(name = "password", nullable = false, updatable = false, columnDefinition = "VARCHAR (60)")
+    @Column(name = "password", nullable = false, columnDefinition = "VARCHAR (60)")
     @Length(min = 8, max = 60, message = UserRegistrationViolationMassages.USER_INCORRECT_PASSWORD_LENGTH)
     public String getPassword() {
         return this.password;
@@ -80,7 +80,7 @@ public class User extends BaseEntity implements UserDetails {
     }
 
     @NotEmpty
-    @Column(name = "password", nullable = false, columnDefinition = "VARCHAR (10)")
+    @Column(name = "phone_number", nullable = false, columnDefinition = "VARCHAR (10)")
     @Length(min = 10, max = 10, message = UserRegistrationViolationMassages.USER_INCORRECT_PHONE_LENGTH)
     public String getPhoneNumber() {
         return this.phoneNumber;
