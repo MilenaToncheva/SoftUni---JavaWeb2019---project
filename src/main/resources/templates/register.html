@@ -5,7 +5,6 @@
 >
 <head>
     <th:block th:include="~{fragments/head}"/>
-    <link rel="stylesheet" th:href="@{/static/css/intlTelInput.min.css}">
 </head>
 <body>
 <header>
@@ -25,47 +24,59 @@
                 <small id="firstNameHelp" th:each="error : ${#fields.errors('firstName')}"
                        th:text="${error}"></small>
             </div>
-            <div class="form-group mx-auto" th:classappend="${#fields.hasErrors('lastName')} ? 'text-danger'">
+            <div class="form-group mx-auto"
+                 th:classappend="${#fields.hasErrors('lastName')} ? 'customErrorMessageColor'">
                 <label for="inputLastName">Last Name:</label>
                 <input class="form-control w-auto mx-auto" id="inputLastName" required th:field="*{lastName}"
                        type="text">
                 <small id="inputLastHelp" th:each="error : ${#fields.errors('lastName')}"
                        th:text="${error}"></small>
             </div>
-            <div class="form-group mx-auto" th:classappend="${#fields.hasErrors('username')} ? 'text-danger'">
+            <div class="form-group mx-auto"
+                 th:classappend="${#fields.hasErrors('username')} ? 'customErrorMessageColor'">
                 <label for="inputUsername">Username:</label>
                 <input class="form-control w-auto mx-auto" id="inputUsername" required th:field="*{username}"
                        type="text">
                 <small id="inputUsernameHelp" th:each="error : ${#fields.errors('username')}"
                        th:text="${error}"></small>
             </div>
-            <div class="form-group mx-auto" th:classappend="${#fields.hasErrors('password')} ? 'text-danger'">
+            <div class="form-group mx-auto"
+                 th:classappend="${#fields.hasErrors('password')} ? 'customErrorMessageColor'">
                 <label for="inputPassword">Password:</label>
                 <input class="form-control w-auto mx-auto" id="inputPassword" required th:field="*{password}"
                        type="password">
                 <small id="inputPasswordHelp" th:each="error : ${#fields.errors('password')}"
                        th:text="${error}"></small>
             </div>
-            <div class="form-group mx-auto" th:classappend="${#fields.hasErrors('password')} ? 'text-danger'">
+            <div class="form-group mx-auto"
+                 th:classappend="${#fields.hasErrors('confirmPassword')} ? 'customErrorMessageColor'">
                 <label for="inputPassword2">Confirm Password:</label>
-                <input class="form-control w-auto mx-auto" id="inputPassword2" required th:field="*{password}"
+                <input class="form-control w-auto mx-auto" id="inputPassword2" required th:field="*{confirmPassword}"
                        type="password">
-                <small id="inputPasswordHelp2" th:each="error : ${#fields.errors('password')}"
+                <small id="inputPasswordHelp2" th:each="error : ${#fields.errors('confirmPassword')}"
                        th:text="${error}"></small>
             </div>
-            <div class="form-group mx-auto" th:classappend="${#fields.hasErrors('email')} ? 'text-danger'">
+            <div class="form-group mx-auto" th:classappend="${#fields.hasErrors('email')} ? 'customErrorMessageColor'">
                 <label for="inputEmail">Email:</label>
-                <input class="form-control w-auto mx-auto" id="inputEmail" required th:field="*{password}" type="email">
+                <input class="form-control w-auto mx-auto" id="inputEmail" required th:field="*{email}" type="email">
                 <small id="inputEmailHelp" th:each="error : ${#fields.errors('email')}"
                        th:text="${error}"></small>
             </div>
-            <div class="form-group mx-auto" th:classappend="${#fields.hasErrors('phoneNumber')} ? 'text-danger'">
+            <div class="form-group mx-auto"
+                 th:classappend="${#fields.hasErrors('phoneNumber')} ? 'customErrorMessageColor'">
                 <label for="inputPhoneNumber">Phone number:</label>
-                <input class="form-control w-auto mx-auto" id="inputPhoneNumber" pattern="^[0]{1}[1-9]{9}$" required
+                <input class="form-control w-auto mx-auto" id="inputPhoneNumber" pattern="^[0]{1}[0-9]{9}$" required
                        th:field="*{phoneNumber}" type="tel">
                 <small id="inputPhoneNumberHelp" th:each="error : ${#fields.errors('phoneNumber')}"
                        th:text="${error}"></small>
             </div>
+            <!--            <div class="form-group mx-auto" th:classappend="${#fields.hasErrors('phoneNumber')} ? 'text-danger'">-->
+            <!--                <label for="phone">Phone number:</label>-->
+            <!--                <input class="form-control w-auto mx-auto" id="phone" pattern="^[0]{1}[1-9]{9}$" required-->
+            <!--                       th:field="*{phoneNumber}" type="tel">-->
+            <!--                <small id="inputPhoneNumberHelp" th:each="error : ${#fields.errors('phoneNumber')}"-->
+            <!--                       th:text="${error}"></small>-->
+            <!--            </div>-->
             <button class="customButtonRegister" type="submit">Register</button>
         </form>
     </div>
@@ -73,7 +84,20 @@
 <footer>
     <th:block th:include="~{fragments/footer}"/>
 </footer>
-<script th:src="@{/static/js/intlTelInput.min.js}">
+<script>
+    let password = document.getElementById("inputPassword")
+        , confirmPassword = document.getElementById("inputPassword2");
+
+    function validatePassword() {
+        if (password.value !== confirmPassword.value) {
+            confirmPassword.setCustomValidity("Passwords Don't Match");
+        } else {
+            confirmPassword.setCustomValidity('');
+        }
+    }
+
+    password.onchange = validatePassword;
+    confirmPassword.onkeyup = validatePassword;
 
 </script>
 </body>
