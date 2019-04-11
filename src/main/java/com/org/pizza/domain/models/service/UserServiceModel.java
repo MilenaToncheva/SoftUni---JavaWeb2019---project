@@ -1,16 +1,14 @@
-package com.org.pizza.domain.entities;
+package com.org.pizza.domain.models.service;
 
 import com.org.pizza.constant.userMessages.UserRegistrationViolationMassages;
+import com.org.pizza.domain.entities.Role;
 import org.hibernate.validator.constraints.Length;
-import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.Set;
 
-@Entity
-@Table(name = "users")
-public class User extends BaseEntity implements UserDetails {
+public class UserServiceModel extends BaseServiceModel {
 
     private String firstName;
     private String lastName;
@@ -18,11 +16,11 @@ public class User extends BaseEntity implements UserDetails {
     private String password;
     private String email;
     private String phoneNumber;
-    private Set<Role> authorities;
+    private Set<RoleServiceModel> authorities;
 
 
     @NotEmpty
-    @Column(name = "first_name", nullable = false, updatable = false, columnDefinition = "VARCHAR (16)")
+    @NotNull
     @Length(min = 4, max = 16, message = UserRegistrationViolationMassages.USER_INCORRECT_FIRST_NAME_LENGTH)
     public String getFirstName() {
         return this.firstName;
@@ -33,7 +31,7 @@ public class User extends BaseEntity implements UserDetails {
     }
 
     @NotEmpty
-    @Column(name = "last_name", nullable = false, updatable = false, columnDefinition = "VARCHAR (16)")
+    @NotNull
     @Length(min = 4, max = 16, message = UserRegistrationViolationMassages.USER_INCORRECT_LAST_NAME_LENGTH)
     public String getLastName() {
         return this.lastName;
@@ -44,9 +42,8 @@ public class User extends BaseEntity implements UserDetails {
     }
 
     @NotEmpty
-    @Column(name = "username", unique = true, nullable = false, updatable = false, columnDefinition = "VARCHAR (16)")
+    @NotNull
     @Length(min = 4, max = 16, message = UserRegistrationViolationMassages.USER_INCORRECT_USERNAME_LENGTH)
-    @Override
     public String getUsername() {
         return this.username;
     }
@@ -55,8 +52,8 @@ public class User extends BaseEntity implements UserDetails {
         this.username = username;
     }
 
-    @Override
-    @Column(name = "password", nullable = false, columnDefinition = "VARCHAR (60)")
+    @NotEmpty
+    @NotNull
     @Length(min = 8, max = 60, message = UserRegistrationViolationMassages.USER_INCORRECT_PASSWORD_LENGTH)
     public String getPassword() {
         return this.password;
@@ -67,8 +64,8 @@ public class User extends BaseEntity implements UserDetails {
     }
 
     @NotEmpty
-    @Column(name = "email", unique = true, nullable = false, updatable = false, columnDefinition = "VARCHAR (60)")
-    @Length(max = 60, message = UserRegistrationViolationMassages.USER_INCORRECT_EMAIL_LENGTH)
+    @NotNull
+    @Length(min = 8, max = 60, message = UserRegistrationViolationMassages.USER_INCORRECT_PASSWORD_LENGTH)
     public String getEmail() {
         return this.email;
     }
@@ -79,7 +76,7 @@ public class User extends BaseEntity implements UserDetails {
     }
 
     @NotEmpty
-    @Column(name = "phone_number", unique = true, nullable = false, columnDefinition = "VARCHAR (10)")
+    @NotNull
     @Length(min = 10, max = 10, message = UserRegistrationViolationMassages.USER_INCORRECT_PHONE_LENGTH)
     public String getPhoneNumber() {
         return this.phoneNumber;
@@ -89,41 +86,11 @@ public class User extends BaseEntity implements UserDetails {
         this.phoneNumber = phoneNumber;
     }
 
-    @Override
-    @ManyToMany(targetEntity = Role.class, fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "users_roles",
-            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
-    public Set<Role> getAuthorities() {
+    public Set<RoleServiceModel> getAuthorities() {
         return this.authorities;
     }
 
-    public void setAuthorities(Set<Role> authorities) {
+    public void setAuthorities(Set<RoleServiceModel> authorities) {
         this.authorities = authorities;
-    }
-
-    @Override
-    @Transient
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-
-    @Override
-    @Transient
-    public boolean isAccountNonLocked() {
-        return true;
-    }
-
-    @Override
-    @Transient
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    @Override
-    @Transient
-    public boolean isEnabled() {
-        return true;
     }
 }

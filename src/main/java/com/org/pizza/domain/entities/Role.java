@@ -1,6 +1,5 @@
-package com.org.pizza.domain.entities.pizza;
+package com.org.pizza.domain.entities;
 
-import com.org.pizza.domain.entities.BaseEntity;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.Entity;

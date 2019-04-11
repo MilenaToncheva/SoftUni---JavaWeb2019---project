@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+>
+<head>
+    <th:block th:include="~{fragments/head}"/>
+</head>
+<body>
+<header>
+    <th:block th:include="~{fragments/navbar}"/>
+</header>
+<main>
+    <div class="jumbotron bg-transparent text-center mainBodyText">
+        <h2>Login</h2>
+        <hr class="customHr">
+        <form th:action="@{/users/login}" th:method="post">
+
+            <div class="form-group mx-auto">
+                <label for="inputUsername">Username:</label>
+                <input class="form-control w-auto mx-auto" id="inputUsername" name="username"
+                       type="text">
+            </div>
+            <div class="form-group mx-auto">
+                <label for="inputPassword">Password:</label>
+                <input class="form-control w-auto mx-auto" id="inputPassword" name="password"
+                       type="password">
+            </div>
+
+            <button class="customButtonRegister" type="submit">Login</button>
+        </form>
+        <th:block th:if="${param.error}">
+            <div class="text-center customErrorMessageColor"
+                 th:text="${session.SPRING_SECURITY_LAST_EXCEPTION.message}">
+                <!--            Bad Credentials-->
+            </div>
+        </th:block>
+        <th:block th:if="${param.logout}">
+            <div class="text-center customErrorMessageColor">
+                Successful logout!
+            </div>
+        </th:block>
+    </div>
+</main>
+<footer>
+    <th:block th:include="~{fragments/footer}"/>
+</footer>
+</body>
+</html>
