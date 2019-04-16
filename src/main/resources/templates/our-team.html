@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+>
+<head>
+    <th:block th:include="~{fragments/head}"/>
+</head>
+<body>
+<header>
+    <th:block th:include="~{fragments/navbar}"/>
+</header>
+<main>
+    <div class="jumbotron-fluid mainBody mt-4">
+        <h1>Our Team</h1>
+        <hr class="hr-2 bg-dark">
+
+        <div class="row justify-content-center">
+            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-8 teamBox">
+                <img alt="leonardo"
+                     class="teamPicture float-left"
+                     th:src="@{'https://res.cloudinary.com/turtei/image/upload/c_scale,h_128,w_128/v1554853574/pizzaApp/basePics/leonardo.jpg'}">
+                <div class="personText text-left ">
+                    <p class="font-weight-bold">Name: <span class="font-weight-normal">Leonardo</span></p>
+                    <p class="font-weight-bold">Skills: <span class="font-weight-normal">Lorem ipsum dolor sit amet, consectetur adipisicing.</span>
+                    </p>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-8 teamBox">
+                <img alt="donatello"
+                     class="teamPicture float-right"
+                     th:src="@{'https://res.cloudinary.com/turtei/image/upload/v1554853574/pizzaApp/basePics/donatello.jpg'}">
+                <div class="personText">
+                    <p class="font-weight-bold">Name: <span class="font-weight-normal">Donatello</span></p>
+                    <p class="font-weight-bold">Skills: <span class="font-weight-normal">Lorem ipsum dolor sit amet, consectetur adipisicing.</span>
+                    </p>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-8 teamBox">
+                <img alt="raphael"
+                     class="teamPicture float-left"
+                     th:src="@{'https://res.cloudinary.com/turtei/image/upload/a_hflip,c_scale,h_128,w_128/v1554853574/pizzaApp/basePics/raphael.jpg'}">
+                <div class="personText">
+                    <p class="font-weight-bold">Name: <span class="font-weight-normal">Raphael</span></p>
+                    <p class="font-weight-bold">Skills: <span class="font-weight-normal">Lorem ipsum dolor sit amet, consectetur adipisicing.</span>
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-8 teamBox">
+                <img alt="michelangelo"
+                     class="teamPicture float-right"
+                     th:src="@{'https://res.cloudinary.com/turtei/image/upload/c_scale,w_128/v1554853574/pizzaApp/basePics/michelangelo.jpg'}">
+                <div class="personText">
+                    <p class="font-weight-bold">Name: <span class="font-weight-normal">Michelangelo</span></p>
+                    <p class="font-weight-bold">Skills: <span class="font-weight-normal">Lorem ipsum dolor sit amet, consectetur adipisicing.</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<footer>
+    <th:block th:include="~{fragments/footer}"/>
+</footer>
+</body>
+</html>

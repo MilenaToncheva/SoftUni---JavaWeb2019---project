@@ -9,20 +9,17 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 public class MappingInitializer {
     private static final String ROOT_PACKAGE_NAME = "com.org.pizza";
 
-    public static void initMappings(ModelMapper modelMapper) {
-        String configureMappingsMethodName = CustomMapping.class
-                .getDeclaredMethods()[0]
+    public static void initMappings(ModelMapper mapper) {
+        String configureMappingsMethodName = CustomMapping.class.getDeclaredMethods()[0]
                 .getName();
 
         getClassesWithCustomMappings()
-                .forEach(klass -> invokeMethodFromClass(klass, configureMappingsMethodName, modelMapper));
-
+                .forEach(klass -> invokeMethodFromClass(klass, configureMappingsMethodName, mapper));
     }
 
     private static List<Class<?>> getClassesWithCustomMappings() {
@@ -31,7 +28,7 @@ public class MappingInitializer {
 
         scanner.addIncludeFilter(new AssignableTypeFilter(CustomMapping.class));
 
-        Set<BeanDefinition> candidates = scanner.findCandidateComponents(MappingInitializer.ROOT_PACKAGE_NAME);
+        var candidates = scanner.findCandidateComponents(MappingInitializer.ROOT_PACKAGE_NAME);
 
         return candidates
                 .stream()
@@ -43,7 +40,6 @@ public class MappingInitializer {
     }
 
     private static Class<?> getClassFromName(String className) {
-
         try {
             return Class.forName(className);
         } catch (ClassNotFoundException e) {
@@ -55,11 +51,10 @@ public class MappingInitializer {
     private static void invokeMethodFromClass(Class<?> klass, String methodName, Object... params) {
         try {
             Method method = klass.getDeclaredMethod(methodName, ModelMapper.class);
-            Object obj = klass.newInstance();
+            var obj = klass.getConstructor().newInstance();
             method.invoke(obj, params);
-        } catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
+        } catch (IllegalAccessException | InvocationTargetException | InstantiationException | NoSuchMethodException e) {
             e.printStackTrace();
         }
-
     }
 }

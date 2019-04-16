@@ -13,6 +13,7 @@
     color: black;
     font-weight: bold;
     padding: 5px;
+!important;
 }
 
 .nav-text-color:hover {
@@ -24,12 +25,27 @@
     color: yellow;
 }
 
+.dropDownSeparateLine {
+    height: 1px;
+    background-color: black;
+}
+
 body {
     background: black;
 }
 
+.basketColor {
+    color: black;
+!important;
+}
+
+.basketColor:hover {
+    color: yellow;
+!important;
+}
+
 .mainBody {
-    border-radius: 0 !IMPORTANT;
+    border-radius: 0 !important;
     background: #cee802;
     border: 1px solid red;
 }
@@ -42,6 +58,68 @@ body {
     width: 10%;
     height: 1px;
     background-color: #cee802;
+}
+
+.customTable {
+    width: 90%;
+}
+
+.customRow:hover {
+    background-color: black;
+!important;
+    color: yellow;
+!important;
+    border-radius: 5px;
+!important;
+    font-weight: bolder;
+!important;
+}
+
+.customRoleButton {
+    width: 80%;
+    border-radius: 5px;
+    border-color: #cee802;
+    background: black;
+    color: yellow;
+}
+
+.customRoleColor:hover {
+    background: #DB3545;
+    color: #ebebeb;
+    font-weight: bold;
+}
+
+.picture-box {
+    border-radius: 10px;
+    margin-bottom: 1%;
+    width: 60%;
+}
+
+.addressBox {
+    border: black 1px solid;
+    border-radius: 8px;
+    margin-bottom: 1%;
+    width: 60%;
+    color: #ebebeb;
+    background: #DB3545;
+    padding: 1%;
+}
+
+.teamBox {
+    border: 1px solid black;
+    width: 30%;
+    padding: 1%;
+    margin: 1%;
+    border-radius: 5px;
+    background: #DB3545;
+    color: #ebebeb;
+}
+
+
+.teamPicture {
+    border-radius: 10px;
+    width: 30%;
+    margin: 3%;
 }
 
 .customButtonRegister {
@@ -71,6 +149,7 @@ body {
 .customErrorMessageColor {
     color: #cee802;
 }
+
 .footer-icons {
     font-size: 3em;
     color: #ebebeb;
@@ -83,7 +162,7 @@ body {
 }
 
 .footer-icons:hover {
-    background: #ebebeb !IMPORTANT;
-    color: #DB3545 !IMPORTANT;
+    background: #ebebeb !important;
+    color: #DB3545 !important;
 }
 

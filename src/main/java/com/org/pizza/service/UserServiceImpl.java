@@ -3,23 +3,30 @@ package com.org.pizza.service;
 import com.org.pizza.domain.entities.User;
 import com.org.pizza.domain.models.service.RoleServiceModel;
 import com.org.pizza.domain.models.service.UserServiceModel;
+import com.org.pizza.error.WrongUsernameOrPassword;
 import com.org.pizza.repository.UserRepository;
 import com.org.pizza.validation.errors.UserRegistrationException;
 import com.org.pizza.validation.userValidation.UserValidationService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.stream.Collectors;
 
-import static com.org.pizza.constant.UserAuthoritiesConstats.ROLE_USER;
+import static com.org.pizza.constant.UserAuthoritiesConstants.*;
 import static com.org.pizza.constant.errorMessages.user.UserErrorMessages.INVALID_DATA_INPUT;
 import static com.org.pizza.constant.errorMessages.user.UserErrorMessages.USER_ALREADY_EXIST;
+import static com.org.pizza.constant.userMessages.UserLoginMessages.WRONG_USERNAME_OR_PASSWORD;
 
 @Service
 public class UserServiceImpl implements UserService {
+
+    private final static String USER_NOT_FOUND = "User not found!";
 
     private final UserRepository userRepository;
     private final RoleService roleService;
@@ -69,4 +76,57 @@ public class UserServiceImpl implements UserService {
 
         return this.modelMapper.map(user, UserServiceModel.class);
     }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        return this.userRepository
+                .findByUsername(username)
+                .orElseThrow(() -> new WrongUsernameOrPassword(WRONG_USERNAME_OR_PASSWORD));
+    }
+
+    @Override
+    public List<UserServiceModel> findAllUsers() {
+        List<User> users = this.userRepository.findAll();
+        List<UserServiceModel> userServiceModels = users
+                .stream()
+                .map(u -> this.modelMapper.map(u, UserServiceModel.class))
+                .collect(Collectors.toList());
+
+        return userServiceModels;
+    }
+
+    @Override
+    public void deleteUser(String id) {
+        User userToDelete = this.userRepository.findById(id)
+                .orElseThrow(() -> new UsernameNotFoundException(USER_NOT_FOUND));
+
+        this.userRepository.delete(userToDelete);
+    }
+
+    @Override
+    public void setUserRole(String id, String role) {
+        User userToEdit = this.userRepository.findById(id)
+                .orElseThrow(() -> new UsernameNotFoundException(USER_NOT_FOUND));
+
+        UserServiceModel userServiceModel = this.modelMapper.map(userToEdit, UserServiceModel.class);
+        userServiceModel.getAuthorities().clear();
+
+        switch (role) {
+            case "user":
+                userServiceModel.getAuthorities().add(this.roleService.findByAuthority(ROLE_USER));
+                break;
+            case "moderator":
+                userServiceModel.getAuthorities().add(this.roleService.findByAuthority(ROLE_USER));
+                userServiceModel.getAuthorities().add(this.roleService.findByAuthority(ROLE_MODERATOR));
+                break;
+            case "admin":
+                userServiceModel.getAuthorities().add(this.roleService.findByAuthority(ROLE_USER));
+                userServiceModel.getAuthorities().add(this.roleService.findByAuthority(ROLE_MODERATOR));
+                userServiceModel.getAuthorities().add(this.roleService.findByAuthority(ROLE_ADMIN));
+                break;
+        }
+        this.userRepository.saveAndFlush(this.modelMapper.map(userServiceModel, User.class));
+    }
+
+
 }
