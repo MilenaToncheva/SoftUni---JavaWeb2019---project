@@ -1,29 +1,24 @@
 <th:block>
     <th:block sec:authorize="isAnonymous()">
         <nav class="navbar navbar-color justify-content-end">
-            <a class="mr-auto text-decoration-none" href="/">
+            <a class="mr-auto text-decoration-none" th:href="@{/}">
                 <span class="h2 nav-text-color">Pizza</span>
             </a>
 
             <ul class="nav text-center">
                 <li class="nav-item">
-                    <a class="nav-link" href="#">
+                    <a class="nav-link" th:href="@{/menu}">
                         <div class="nav-text-color">Menu</div>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">
+                    <a class="nav-link" th:href="@{/address}">
                         <div class="nav-text-color">Address</div>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">
+                    <a class="nav-link" th:href="@{/contacts}">
                         <div class="nav-text-color">Contacts</div>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">
-                        <div class="nav-text-color">Our Team</div>
                     </a>
                 </li>
                 <li class="nav-item">
@@ -32,7 +27,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">
+                    <a class="nav-link" th:href="@{/users/login}">
                         <div class="nav-text-color">LogIn</div>
                     </a>
                 </li>
@@ -42,113 +37,109 @@
 
     <th:block sec:authorize="isAuthenticated()">
         <nav class="navbar navbar-color justify-content-end">
-            <a class="mr-auto text-decoration-none" href="#">
+            <a class="mr-auto text-decoration-none" th:href="@{/}">
                 <span class="h2 nav-text-color">Pizza</span>
             </a>
 
             <ul class="nav text-center">
                 <li class="nav-item">
-                    <a class="nav-link" href="#">
+                    <a class="nav-link" th:href="@{/menu}">
                         <div class="nav-text-color">Menu</div>
                     </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">
-                        <div class="nav-text-color">Address</div>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">
-                        <div class="nav-text-color">Contacts</div>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">
-                        <div class="nav-text-color">Our Team</div>
-                    </a>
-                </li>
-                <li class="nav-item active">
-                    <div class="dropdown">
-                        <a aria-expanded="false" aria-haspopup="true" class="nav-link active dropdown-toggle"
-                           data-toggle="dropdown"
-                           href="#" id="cartDropdown" role="button">
-                            <i class="fas fa-shopping-basket"></i>
-                        </a>
-                        <!--                            <div class="dropdown-menu" aria-labelledby="cartDropdown">-->
-                        <!--                                <th:block th:each="item : ${#session.getAttribute('shopping-cart')}" th:object="${item}">-->
-                        <!--                                    <div class="dropdown-item" th:text="|*{product.name} x *{quantity}|"></div>-->
-                        <!--                                </th:block>-->
-                        <!--                                <div class="dropdown-divider"></div>-->
-                        <!--                                <div class="text-center">-->
-                        <!--                                    <a th:href="@{/cart/details}" class="btn btn-dark">Cart</a>-->
-                        <!--                                </div>-->
-                        <!--                            </div>-->
-                    </div>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">
-                        <div class="nav-text-color">Menu</div>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">
-                        <div class="nav-text-color">Address</div>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">
-                        <div class="nav-text-color">Contacts</div>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">
-                        <div class="nav-text-color">Our Team</div>
-                    </a>
-                </li>
-                <li class="nav-item active">
-                    <a class="nav-link" th:href="@{/users/profile}">Profile</a>
                 </li>
 
-                <!--                <th:block sec:authorize="hasRole('ROLE_MODERATOR')">-->
-                <!--                    <li class="nav-item active">-->
-                <!--                        <div class="dropdown show">-->
-                <!--                            <a class="nav-link active dropdown-toggle" href="#" role="button"-->
-                <!--                               id="moderatorDropdown"-->
-                <!--                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
-                <!--                                Moderator-->
-                <!--                            </a>-->
-                <!--                            <div class="dropdown-menu" aria-labelledby="moderatorDropdown">-->
-                <!--                                <a class="dropdown-item" th:href="@{/categories/add}">Add Category</a>-->
-                <!--                                <a class="dropdown-item" th:href="@{/products/add}">Add Product</a>-->
-                <!--                                <div class="dropdown-divider"></div>-->
-                <!--                                <a class="dropdown-item" th:href="@{/categories/all}">All Categories</a>-->
-                <!--                                <a class="dropdown-item" th:href="@{/products/all}">All Products</a>-->
-                <!--                            </div>-->
-                <!--                        </div>-->
-                <!--                    </li>-->
-                <!--                </th:block>-->
-                <!--                <th:block sec:authorize="hasRole('ROLE_ADMIN')">-->
-                <!--                    <li class="nav-item active">-->
-                <!--                        <div class="dropdown">-->
-                <!--                            <a class="nav-link active dropdown-toggle" href="#" role="button"-->
-                <!--                               id="adminDropdown"-->
-                <!--                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
-                <!--                                Admin-->
-                <!--                            </a>-->
-                <!--                            <div class="dropdown-menu" aria-labelledby="adminDropdown">-->
-                <!--                                <a class="dropdown-item" th:href="@{/users/all}">All Users</a>-->
-                <!--                                <a class="dropdown-item" th:href="@{/order/all}">All Orders</a>-->
-                <!--                            </div>-->
-                <!--                        </div>-->
-                <!--                    </li>-->
-                <!--                </th:block>-->
-                <!--                <li class="nav-item active">-->
-                <!--                    <form th:action="@{/logout?login}" th:method="post">-->
-                <!--                        <button class="logout-button nav-link">Logout</button>-->
-                <!--                    </form>-->
-                <!--                </li>-->
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/address}">
+                        <div class="nav-text-color">Address</div>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/contacts}">
+                        <div class="nav-text-color">Contacts</div>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/our-team}">
+                        <div class="nav-text-color">Our Team</div>
+                    </a>
+                </li>
+
+
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/users/profile}">
+                        <div class="nav-text-color">Profile</div>
+                    </a>
+                </li>
+
+
+                <!--                TODO:CART-->
+                <li class="nav-item">
+                    <div class="dropdown show nav-text-color">
+                        <a aria-expanded="false"
+                           aria-haspopup="true" class="nav-link dropdown-toggle basketColor "
+                           data-toggle="dropdown"
+                           href="#" id="cartDropdown" role="button">
+                            <th:block>
+                                <!--                                TODO:-->
+                                0
+                            </th:block>
+                            <i class="fas fa-shopping-basket"></i>
+                        </a>
+                        <div aria-labelledby="cartDropdown" class="dropdown-menu navbar-color">
+                            <th:block th:each="item : ${#session.getAttribute('shopping-cart')}" th:object="${item}">
+                                <div class="dropdown-item nav-text-color"
+                                     th:text="|*{product.name} x *{quantity}|"></div>
+                            </th:block>
+                            <hr class="dropDownSeparateLine"/>
+                            <div class="text-center">
+                                <a class="btn nav-text-color" th:href="@{/cart/details}">Cart</a>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+
+                <th:block sec:authorize="hasRole('ROLE_MODERATOR')">
+                    <li class="nav-item">
+                        <div class="dropdown show">
+                            <a aria-expanded="false" aria-haspopup="true" class="nav-link  dropdown-toggle text-dark"
+                               data-toggle="dropdown"
+                               href="#" id="moderatorDropdown" role="link">
+                                <div class="nav-text-color mx-auto float-left">Moderator</div>
+                            </a>
+                            <div aria-labelledby="moderatorDropdown"
+                                 class="dropdown-menu navbar-color">
+                                <a class="dropdown-item nav-text-color" th:href="@{/categories/add}">Add Category</a>
+                                <a class="dropdown-item nav-text-color" th:href="@{/products/add}">Add Product</a>
+                                <hr class="dropDownSeparateLine"/>
+                                <a class="dropdown-item nav-text-color" th:href="@{/categories/all}">All Categories</a>
+                                <a class="dropdown-item nav-text-color" th:href="@{/products/all}">All Products</a>
+                            </div>
+                        </div>
+                    </li>
+                </th:block>
+                <th:block sec:authorize="hasRole('ROLE_ADMIN')">
+                    <li class="nav-item show">
+                        <div class="dropdown">
+                            <a aria-expanded="false" aria-haspopup="true"
+                               class="nav-link active dropdown-toggle text-dark"
+                               data-toggle="dropdown"
+                               href="#" id="adminDropdown" role="button">
+                                <div class="nav-text-color mx-auto float-left">Admin</div>
+                            </a>
+                            <div aria-labelledby="adminDropdown" class="dropdown-menu navbar-color">
+                                <a class="dropdown-item nav-text-color" th:href="@{/users/all}">All Users</a>
+                                <a class="dropdown-item nav-text-color" th:href="@{/order/all}">All Orders</a>
+                            </div>
+                        </div>
+                    </li>
+                </th:block>
+
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/logout?login}" th:method="post">
+                        <div class="nav-text-color">Logout</div>
+                    </a>
+                </li>
             </ul>
-            <!--            </div>-->
         </nav>
 
     </th:block>

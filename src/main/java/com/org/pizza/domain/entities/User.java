@@ -57,7 +57,7 @@ public class User extends BaseEntity implements UserDetails {
 
     @Override
     @Column(name = "password", nullable = false, columnDefinition = "VARCHAR (60)")
-    @Length(min = 8, max = 60, message = UserRegistrationViolationMassages.USER_INCORRECT_PASSWORD_LENGTH)
+    @Length(min = 4, max = 60, message = UserRegistrationViolationMassages.USER_INCORRECT_PASSWORD_LENGTH)
     public String getPassword() {
         return this.password;
     }

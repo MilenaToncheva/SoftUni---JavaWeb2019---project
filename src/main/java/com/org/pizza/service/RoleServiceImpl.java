@@ -1,6 +1,6 @@
 package com.org.pizza.service;
 
-import com.org.pizza.constant.UserAuthoritiesConstats;
+import com.org.pizza.constant.UserAuthoritiesConstants;
 import com.org.pizza.domain.entities.Role;
 import com.org.pizza.domain.models.service.RoleServiceModel;
 import com.org.pizza.repository.RoleRepository;
@@ -27,9 +27,10 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public void seedRolesInDb() {
         if (this.roleRepository.count() == 0) {
-            this.roleRepository.save(new Role(UserAuthoritiesConstats.ROLE_USER));
-            this.roleRepository.save(new Role(UserAuthoritiesConstats.ROLE_MODERATOR));
-            this.roleRepository.save(new Role(UserAuthoritiesConstats.ROLE_ROOT));
+            this.roleRepository.save(new Role(UserAuthoritiesConstants.ROLE_USER));
+            this.roleRepository.save(new Role(UserAuthoritiesConstants.ROLE_MODERATOR));
+            this.roleRepository.save(new Role(UserAuthoritiesConstants.ROLE_ADMIN));
+            this.roleRepository.save(new Role(UserAuthoritiesConstants.ROLE_ROOT));
         }
     }
 

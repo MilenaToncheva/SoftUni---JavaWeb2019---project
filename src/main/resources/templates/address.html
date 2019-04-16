@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+>
+<head>
+    <th:block th:include="~{fragments/head}"/>
+</head>
+<body>
+<header>
+    <th:block th:include="~{fragments/navbar}"/>
+</header>
+<main>
+    <div class="jumbotron-fluid mainBody mt-4 text-center">
+        <h1>Address</h1>
+        <hr class="hr-2 bg-dark">
+        <div class="addressBox mx-auto">
+            <p class="text-left font-weight-bold">Address:
+                <span>
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+            </span>
+            </p>
+            <p class="text-left font-weight-bold">gsm:
+                <span>0123456789</span>
+            </p>
+
+        </div>
+
+        <img alt="map"
+             class="picture-box"
+             th:src="@{https://res.cloudinary.com/turtei/image/upload/v1555288886/pizzaApp/basePics/map.jpg}">
+    </div>
+</main>
+<footer>
+    <th:block th:include="~{fragments/footer}"/>
+</footer>
+</body>
+</html>

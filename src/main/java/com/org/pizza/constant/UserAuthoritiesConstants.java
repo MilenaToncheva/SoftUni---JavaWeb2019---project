@@ -1,6 +1,6 @@
 package com.org.pizza.constant;
 
-public class UserAuthoritiesConstats {
+public class UserAuthoritiesConstants {
 
     public static final String ROLE_USER = "ROLE_USER";
     public static final String ROLE_MODERATOR = "ROLE_MODERATOR";

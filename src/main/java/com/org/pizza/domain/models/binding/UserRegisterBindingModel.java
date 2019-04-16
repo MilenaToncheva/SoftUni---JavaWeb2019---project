@@ -52,7 +52,7 @@ public class UserRegisterBindingModel {
 
     @NotNull
     @NotEmpty
-    @Length(min = 8, max = 60, message = UserRegistrationViolationMassages.USER_INCORRECT_PASSWORD_LENGTH)
+    @Length(min = 4, max = 60, message = UserRegistrationViolationMassages.USER_INCORRECT_PASSWORD_LENGTH)
     public String getPassword() {
         return this.password;
     }
@@ -63,7 +63,7 @@ public class UserRegisterBindingModel {
 
     @NotNull
     @NotEmpty
-    @Length(min = 8, max = 60, message = UserRegistrationViolationMassages.USER_INCORRECT_PASSWORD_LENGTH)
+    @Length(min = 4, max = 60, message = UserRegistrationViolationMassages.USER_INCORRECT_PASSWORD_LENGTH)
     public String getConfirmPassword() {
         return this.confirmPassword;
     }

@@ -18,7 +18,8 @@ public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapt
                 .csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/css/**", "/js/**").permitAll()
-                .antMatchers("/", "/users/register", "/users/login").anonymous()
+                .antMatchers("/", "/address", "/menu").permitAll()
+                .antMatchers("/users/register", "/users/login").anonymous()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
@@ -28,7 +29,9 @@ public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapt
                 .defaultSuccessUrl("/home")
                 .and()
                 .logout()
-                .logoutSuccessUrl("/")
-                .clearAuthentication(true);
+                .logoutSuccessUrl("/users/login")
+                .invalidateHttpSession(true)
+                .clearAuthentication(true)
+                .permitAll();
     }
 }

@@ -54,7 +54,7 @@ public class UserServiceModel extends BaseServiceModel {
 
     @NotEmpty
     @NotNull
-    @Length(min = 8, max = 60, message = UserRegistrationViolationMassages.USER_INCORRECT_PASSWORD_LENGTH)
+    @Length(min = 4, max = 60, message = UserRegistrationViolationMassages.USER_INCORRECT_PASSWORD_LENGTH)
     public String getPassword() {
         return this.password;
     }
@@ -65,7 +65,7 @@ public class UserServiceModel extends BaseServiceModel {
 
     @NotEmpty
     @NotNull
-    @Length(min = 8, max = 60, message = UserRegistrationViolationMassages.USER_INCORRECT_PASSWORD_LENGTH)
+    @Length(min = 8, max = 60, message = UserRegistrationViolationMassages.USER_INCORRECT_EMAIL_LENGTH)
     public String getEmail() {
         return this.email;
     }
