@@ -64,6 +64,12 @@ body {
     width: 90%;
 }
 
+.inputDisabled:read-only {
+    color: #ebebeb;
+!important;
+    background: #DB3545;
+!important;
+}
 .customRow:hover {
     background-color: black;
 !important;

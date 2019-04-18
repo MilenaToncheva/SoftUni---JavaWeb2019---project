@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+>
+<head>
+    <th:block th:include="~{fragments/head}"/>
+</head>
+<body>
+<header>
+    <th:block th:include="~{fragments/navbar}"/>
+</header>
+<main>
+    <div class="jumbotron bg-transparent text-center mainBodyText">
+        <h2>Add New Category</h2>
+        <hr class="customHr">
+        <form th:action="@{/categories/add}" th:method="post">
+
+            <div class="form-group mx-auto"
+                 th:classappend="${#fields.hasErrors('categoryName')} ? 'customErrorMessageColor'"
+                 th:object="${bindingModel}">
+                <label for="categoryName">Category name:</label>
+                <input class="form-control w-auto mx-auto" id="categoryName" required
+                       th:field="*{categoryName}" type="text">
+                <small id="categoryNameHelp" th:each="error : ${#fields.errors('categoryName')}"
+                       th:text="${error}"></small>
+            </div>
+
+            <button class="customButtonRegister" type="submit">Add</button>
+        </form>
+    </div>
+</main>
+<footer>
+    <th:block th:include="~{fragments/footer}"/>
+</footer>
+</body>
+</html>

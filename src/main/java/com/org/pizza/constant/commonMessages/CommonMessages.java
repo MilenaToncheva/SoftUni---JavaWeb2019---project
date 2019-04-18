@@ -4,4 +4,6 @@ public final class CommonMessages {
 
     public static final String MIN_PRICE = "Minimum price is 0.01";
     public static final String BINDING_MODEL = "bindingModel";
+
+    public static final String INVALID_DATA_INPUT = "Invalid Data Input!";
 }

@@ -1,23 +1,17 @@
-package com.org.pizza.domain.entities.pizza;
+package com.org.pizza.domain.models.binding;
 
 import com.org.pizza.constant.pizzaMessages.PizzaCreationViolationMessages;
-import com.org.pizza.domain.entities.BaseEntity;
 import org.hibernate.validator.constraints.Length;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
-@Entity
-@Table(name = "categories")
-public class Category extends BaseEntity {
+public class CategoryAddBindingModel {
 
     private String categoryName;
 
-
+    @NotNull
     @NotEmpty
-    @Column(name = "category_name", nullable = false, unique = true, columnDefinition = "VARCHAR (20)")
     @Length(min = 3, max = 20, message = PizzaCreationViolationMessages.CATEGORY_INCORRECT_NAME_LENGTH)
     public String getCategoryName() {
         return this.categoryName;

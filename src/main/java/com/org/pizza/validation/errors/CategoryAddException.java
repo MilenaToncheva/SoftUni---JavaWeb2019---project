@@ -5,14 +5,13 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 import static com.org.pizza.constant.commonMessages.CommonMessages.INVALID_DATA_INPUT;
 
-
 @ResponseStatus(code = HttpStatus.CONFLICT, reason = INVALID_DATA_INPUT)
-public class UserRegistrationException extends RuntimeException {
+public class CategoryAddException extends RuntimeException {
 
-    public UserRegistrationException() {
+    public CategoryAddException() {
     }
 
-    public UserRegistrationException(String message) {
+    public CategoryAddException(String message) {
         super(message);
     }
 

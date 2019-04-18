@@ -3,8 +3,10 @@ package com.org.pizza.service;
 import com.org.pizza.domain.entities.User;
 import com.org.pizza.domain.models.service.RoleServiceModel;
 import com.org.pizza.domain.models.service.UserServiceModel;
+import com.org.pizza.error.WrongPassword;
 import com.org.pizza.error.WrongUsernameOrPassword;
 import com.org.pizza.repository.UserRepository;
+import com.org.pizza.validation.errors.UserProfileEditException;
 import com.org.pizza.validation.errors.UserRegistrationException;
 import com.org.pizza.validation.userValidation.UserValidationService;
 import org.modelmapper.ModelMapper;
@@ -19,8 +21,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static com.org.pizza.constant.UserAuthoritiesConstants.*;
-import static com.org.pizza.constant.errorMessages.user.UserErrorMessages.INVALID_DATA_INPUT;
-import static com.org.pizza.constant.errorMessages.user.UserErrorMessages.USER_ALREADY_EXIST;
+import static com.org.pizza.constant.commonMessages.CommonMessages.INVALID_DATA_INPUT;
+import static com.org.pizza.constant.errorMessages.user.UserErrorMessages.*;
+import static com.org.pizza.constant.userMessages.UserLoginMessages.WRONG_PASSWORD;
 import static com.org.pizza.constant.userMessages.UserLoginMessages.WRONG_USERNAME_OR_PASSWORD;
 
 @Service
@@ -51,16 +54,7 @@ public class UserServiceImpl implements UserService {
             throw new UserRegistrationException(INVALID_DATA_INPUT);
         }
 
-        List<User> users = this.userRepository
-                .findAllByPhoneNumberOrEmailOrUsername(
-                        userServiceModel.getPhoneNumber(),
-                        userServiceModel.getEmail(),
-                        userServiceModel.getUsername()
-                ).orElse(null);
-
-        if (!userValidationService.isValid(users)) {
-            throw new UserRegistrationException(USER_ALREADY_EXIST);
-        }
+        checkIfUserDataAlreadyExist(userServiceModel);
 
         if (this.userRepository.count() == 0) {
             userServiceModel.setAuthorities(this.roleService.findAllRoles());
@@ -76,6 +70,7 @@ public class UserServiceImpl implements UserService {
 
         return this.modelMapper.map(user, UserServiceModel.class);
     }
+
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -128,5 +123,59 @@ public class UserServiceImpl implements UserService {
         this.userRepository.saveAndFlush(this.modelMapper.map(userServiceModel, User.class));
     }
 
+    @Override
+    public UserServiceModel findByUsername(String username) {
+        User user = this.userRepository.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException(USER_NOT_FOUND));
+        UserServiceModel userServiceModel = this.modelMapper.map(user, UserServiceModel.class);
+        return userServiceModel;
+    }
 
+    @Override
+    public void editUserProfile(UserServiceModel userServiceModel, String oldPassword) {
+
+        if (!userValidationService.isValid(userServiceModel)) {
+            throw new UserRegistrationException(INVALID_DATA_INPUT);
+        }
+        User user = this.userRepository.findByUsername(userServiceModel.getUsername())
+                .orElseThrow(() -> new UsernameNotFoundException(USER_NOT_FOUND));
+
+        if (!this.bCryptPasswordEncoder.matches(oldPassword, user.getPassword())) {
+            throw new WrongPassword(WRONG_PASSWORD);
+        }
+
+        if (!"".equals(userServiceModel.getPassword())) {
+            user.setPassword(this.bCryptPasswordEncoder.encode(userServiceModel.getPassword()));
+        }
+
+        if (!userServiceModel.getPhoneNumber().equals("") &&
+                !user.getPhoneNumber().equals(userServiceModel.getPhoneNumber())) {
+
+            this.checkIfUserDataAlreadyExist(userServiceModel.getPhoneNumber());
+            user.setPhoneNumber(userServiceModel.getPhoneNumber());
+        }
+        this.userRepository.save(user);
+    }
+
+    private void checkIfUserDataAlreadyExist(UserServiceModel userServiceModel) {
+        List<User> users = this.userRepository
+                .findAllByPhoneNumberOrEmailOrUsername(
+                        userServiceModel.getPhoneNumber(),
+                        userServiceModel.getEmail(),
+                        userServiceModel.getUsername()
+                ).orElse(null);
+
+        if (!userValidationService.isValid(users)) {
+            throw new UserRegistrationException(USER_ALREADY_EXIST);
+        }
+    }
+
+    private void checkIfUserDataAlreadyExist(String phone) {
+        List<User> users = this.userRepository
+                .findAllByPhoneNumber(phone).orElse(null);
+
+        if (!userValidationService.isValid(users)) {
+            throw new UserProfileEditException(USER_PHONE_NUMBER_ALREADY_EXIST);
+        }
+    }
 }

@@ -1,10 +1,115 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+>
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <th:block th:include="~{fragments/head}"/>
 </head>
 <body>
+<header>
+    <th:block th:include="~{fragments/navbar}"/>
+</header>
+<main>
+    <div class="jumbotron bg-transparent text-center mainBodyText">
+        <h2>Edit Profile</h2>
+        <hr class="customHr">
+        <form th:action="@{/users/profile}" th:method="post" th:object="${bindingModel}">
 
+            <div class="form-group mx-auto"
+                 th:classappend="${#fields.hasErrors('firstName')} ? 'customErrorMessageColor'">
+                <label for="firstName">First Name:</label>
+                <input class="form-control w-auto mx-auto inputDisabled" id="firstName" readonly th:field="*{firstName}"
+                       type="text">
+                <small id="firstNameHelp" th:each="error : ${#fields.errors('firstName')}"
+                       th:text="${error}"></small>
+            </div>
+            <div class="form-group mx-auto"
+                 th:classappend="${#fields.hasErrors('lastName')} ? 'customErrorMessageColor'">
+                <label for="lastName">Last Name:</label>
+                <input class="form-control w-auto mx-auto inputDisabled" id="lastName" readonly th:field="*{lastName}"
+                       type="text">
+                <small id="lastNameHelp" th:each="error : ${#fields.errors('lastName')}"
+                       th:text="${error}"></small>
+            </div>
+            <div class="form-group mx-auto"
+                 th:classappend="${#fields.hasErrors('username')} ? 'customErrorMessageColor'">
+                <label for="username">Username:</label>
+                <input class="form-control w-auto mx-auto inputDisabled" id="username" name="username" readonly
+                       th:field="*{username}" type="text">
+                <small id="usernameHelp" th:each="error : ${#fields.errors('username')}"
+                       th:text="${error}"></small>
+            </div>
+            <div class="form-group mx-auto">
+                <label for="oldPassword">Old Password:</label>
+                <input class="form-control w-auto mx-auto" id="oldPassword" name="oldPassword" required
+                       th:field="*{oldPassword}" type="password">
+            </div>
+            <div class="form-group mx-auto">
+                <!--                 th:classappend="${#fields.hasErrors('password')} ? 'customErrorMessageColor'">-->
+                <label for="password">Password:</label>
+                <input class="form-control w-auto mx-auto" id="password" th:field="*{password}"
+                       type="password">
+                <!--                <small id="passwordHelp" th:each="error : ${#fields.errors('password')}"-->
+                <!--                       th:text="${error}"></small>-->
+                <!--            </div>-->
+                <div class="form-group mx-auto">
+                    <!--                 th:classappend="${#fields.hasErrors('confirmPassword')} ? 'customErrorMessageColor'">-->
+                    <label for="confirmPassword">Confirm Password:</label>
+                    <input class="form-control w-auto mx-auto" id="confirmPassword" th:field="*{confirmPassword}"
+                           type="password">
+                    <!--                <small id="confirmPasswordHelp" th:each="error : ${#fields.errors('confirmPassword')}"-->
+                    <!--                       th:text="${error}"></small>-->
+                </div>
+                <div class="form-group mx-auto">
+                    <!-- th:classappend="${#fields.hasErrors('email')} ? 'customErrorMessageColor'">&ndash;&gt;-->
+                    <label for="email">Email:</label>
+                    <input class="form-control w-auto mx-auto inputDisabled" id="email" readonly th:field="*{email}"
+                           type="email">
+                    <!--                    <small id="emailHelp" th:each="error : ${#fields.errors('email')}"-->
+                    <!--                           th:text="${error}"></small>-->
+                </div>
+                <div class="form-group mx-auto">
+                    <!--                     th:classappend="${#fields.hasErrors('phoneNumber')} ? 'customErrorMessageColor'">-->
+                    <label for="phoneNumber">Phone number:</label>
+                    <input class="form-control w-auto mx-auto " id="phoneNumber" pattern="^[0]{1}[0-9]{9}$"
+                           th:field="*{phoneNumber}" type="tel">
+                    <!--                    <small id="phoneNumberHelp" th:each="error : ${#fields.errors('phoneNumber')}"-->
+                    <!--                           th:text="${error}"></small>-->
+                </div>
+                <!--            <div class="form-group mx-auto" th:classappend="${#fields.hasErrors('phoneNumber')} ? 'text-danger'">-->
+                <!--                <label for="phone">Phone number:</label>-->
+                <!--                <input class="form-control w-auto mx-auto" id="phone" pattern="^[0]{1}[1-9]{9}$" required-->
+                <!--                       th:field="*{phoneNumber}" type="tel">-->
+                <!--                <small id="inputPhoneNumberHelp" th:each="error : ${#fields.errors('phoneNumber')}"-->
+                <!--                       th:text="${error}"></small>-->
+                <!--            </div>-->
+                <button class="customButtonRegister" type="submit">Edit</button>
+        </form>
+    </div>
+
+</main>
+<footer>
+    <th:block th:include="~{fragments/footer}"/>
+</footer>
+<script>
+    let password = document.getElementById("password")
+        , confirmPassword = document.getElementById("confirmPassword")
+        , oldPassword = document.getElementById('oldPassword');
+
+    function validatePassword() {
+        if (password.value !== confirmPassword.value) {
+            confirmPassword.setCustomValidity("Passwords Don't Match");
+        } else if (oldPassword.value === password.value) {
+            password.setCustomValidity("New password must be different from the old");
+        } else {
+            confirmPassword.setCustomValidity('');
+        }
+    }
+
+    password.onchange = validatePassword;
+    confirmPassword.onkeyup = validatePassword;
+
+</script>
 </body>
 </html>
