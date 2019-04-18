@@ -1,0 +1,50 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="en"-->
+<!--      xmlns="http://www.w3.org/1999/xhtml"-->
+<!--      xmlns:th="http://www.thymeleaf.org"-->
+<!--&gt;-->
+<!--<head>-->
+<!--    <th:block th:include="~{fragments/head}"/>-->
+<!--</head>-->
+<!--<body>-->
+<!--<header>-->
+<!--    <th:block th:include="~{fragments/navbar}"/>-->
+<!--</header>-->
+<!--<main>-->
+<!--    <div class="jumbotron-fluid mainBody my-4">-->
+<!--        <h1 class="text-center">All Ingredients</h1>-->
+<!--        <hr class="hr-2 bg-dark">-->
+<!--        <table class="customTable table-hover mx-auto">-->
+<!--            <thead>-->
+<!--            <tr class="row mx-auto mb-4 font-weight-bold">-->
+<!--                <th class="col-md-2 text-center">#</th>-->
+<!--                <th class="col-md-5 text-center">Category Name</th>-->
+<!--                <th class="col-md-5 text-center">Actions</th>-->
+<!--            </tr>-->
+<!--            </thead>-->
+<!--            <tbody>-->
+<!--            <th:block th:each="model, iter : ${bindingModel}">-->
+
+<!--                <tr class="row mx-auto">-->
+<!--                    <th class="col-md-2 customRow text-center" th:text="${iter.index+1}"></th>-->
+<!--                    <td class="col-md-5 customRow text-center" th:text="${model.name}"></td>-->
+<!--                    <td class="col-md-5 text-center">-->
+<!--                        <form th:action="@{/categories/edit/{id}(id=${model.id})}" th:method="post">-->
+<!--                            <button class="btn customRoleButton customRoleColor">Edit</button>-->
+<!--                        </form>-->
+<!--                        <form th:action="@{/categories/delete/{id}(id=${model.id})}" th:method="post">-->
+<!--                            <button class="btn customRoleButton customRoleColor">Delete</button>-->
+<!--                        </form>-->
+<!--                    </td>-->
+<!--                </tr>-->
+<!--            </th:block>-->
+<!--            </tbody>-->
+<!--        </table>-->
+<!--        <hr class="hr-2 bg-dark">-->
+<!--    </div>-->
+<!--</main>-->
+<!--<footer>-->
+<!--    <th:block th:include="~{fragments/footer}"/>-->
+<!--</footer>-->
+<!--</body>-->
+<!--</html>-->

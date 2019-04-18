@@ -29,7 +29,7 @@
             <tbody>
             <th:block th:each="user, iter : ${model}">
 
-                <tr class="row mx-auto ">
+                <tr class="row mx-auto">
                     <th class="col-md-1 customRow text-center" th:text="${iter.index+1}"></th>
                     <td class="col-md-1 customRow text-center" th:text="${user.username}"></td>
                     <td class="col-md-2 customRow text-center" th:text="${user.firstName}"></td>

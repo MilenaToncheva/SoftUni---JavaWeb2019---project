@@ -1,8 +1,10 @@
 package com.org.pizza.web.controller;
 
+import com.org.pizza.domain.models.binding.UserEditBindingModel;
 import com.org.pizza.domain.models.binding.UserRegisterBindingModel;
 import com.org.pizza.domain.models.service.UserServiceModel;
 import com.org.pizza.domain.models.view.UserAllViewModel;
+import com.org.pizza.domain.models.view.UserProfileViewModel;
 import com.org.pizza.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +14,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -61,6 +65,36 @@ public class UserController extends BaseController {
         return view("login");
     }
 
+
+    @GetMapping("/profile")
+    @PreAuthorize("isAuthenticated()")
+    public ModelAndView profileEdit(Principal principal, ModelAndView modelAndView) {
+        UserServiceModel userServiceModel = this.userService.findByUsername(principal.getName());
+        UserProfileViewModel profileViewModel = this.modelMapper.map(userServiceModel, UserProfileViewModel.class);
+        modelAndView.addObject(BINDING_MODEL, profileViewModel);
+
+        return view("profile", modelAndView);
+    }
+
+    @PostMapping("/profile")
+    @PreAuthorize("isAuthenticated()")
+    public ModelAndView profileEditConfirm(@Valid @ModelAttribute(
+            name = BINDING_MODEL) UserEditBindingModel bindingModel,
+                                           ModelAndView modelAndView, BindingResult bindingResult,
+                                           HttpSession session) {
+
+        if (bindingResult.hasErrors() || !bindingModel.getPassword().equals(bindingModel.getConfirmPassword())) {
+            modelAndView.addObject(BINDING_MODEL, bindingModel);
+            return view("profile", modelAndView);
+        }
+        UserServiceModel userServiceModel = this.modelMapper.map(bindingModel, UserServiceModel.class);
+        this.userService.editUserProfile(userServiceModel, bindingModel.getOldPassword());
+        if (!"".equals(bindingModel.getPassword())) {
+            session.invalidate();
+        }
+        return view("login");
+    }
+
     @GetMapping("/all")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ModelAndView allUsers(ModelAndView modelAndView) {
@@ -104,13 +138,16 @@ public class UserController extends BaseController {
     }
 
 
-    private boolean inputDataIsValid(ModelAndView modelAndView, @ModelAttribute(name = BINDING_MODEL) @Valid UserRegisterBindingModel bindingModel, BindingResult bindingResult) {
+    private boolean inputDataIsValid(ModelAndView modelAndView,
+                                     @ModelAttribute(name = BINDING_MODEL) @Valid UserRegisterBindingModel bindingModel,
+                                     BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             modelAndView.addObject(BINDING_MODEL, bindingModel);
             return true;
         }
 
         if (!bindingModel.getPassword().equals(bindingModel.getConfirmPassword())) {
+            modelAndView.addObject(BINDING_MODEL, bindingModel);
             return true;
         }
         return false;

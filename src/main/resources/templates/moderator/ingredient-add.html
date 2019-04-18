@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+>
+<head>
+    <th:block th:include="~{fragments/head}"/>
+</head>
+<body>
+<header>
+    <th:block th:include="~{fragments/navbar}"/>
+</header>
+<main>
+    <div class="jumbotron bg-transparent text-center mainBodyText">
+        <h2>Add New Ingredient</h2>
+        <hr class="customHr">
+
+        <form th:action="@{/ingredients/add}" th:method="post" th:object="${bindingModel}">
+
+            <div class="form-group mx-auto"
+                 th:classappend="${#fields.hasErrors('ingredientName')} ? 'customErrorMessageColor'">
+                <label for="ingredientName">Ingredient name:</label>
+                <input class="form-control w-auto mx-auto" id="ingredientName" required
+                       th:field="*{ingredientName}" type="text">
+                <small id="ingredientNameHelp" th:each="error : ${#fields.errors('ingredientName')}"
+                       th:text="${error}"></small>
+            </div>
+            <div class="form-group mx-auto"
+                 th:classappend="${#fields.hasErrors('ingredientPrice')} ? 'customErrorMessageColor'">
+                <label for="ingredientPrice">Ingredient price:</label>
+                <input class="form-control w-auto mx-auto" id="ingredientPrice" required
+                       th:field="*{ingredientPrice}" type="text">
+                <small id="ingredientPriceHelp" th:each="error : ${#fields.errors('ingredientPrice')}"
+                       th:text="${error}"></small>
+            </div>
+
+            <button class="customButtonRegister" type="submit">Add</button>
+        </form>
+    </div>
+</main>
+<footer>
+    <th:block th:include="~{fragments/footer}"/>
+</footer>
+</body>
+</html>
