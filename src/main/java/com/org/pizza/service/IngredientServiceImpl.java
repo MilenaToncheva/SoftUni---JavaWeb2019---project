@@ -53,18 +53,18 @@ public class IngredientServiceImpl implements IngredientService {
     }
 
     @Override
-    public void editIngredient(IngredientServiceModel ingredientServiceModel, String id) {
+    public void editIngredient(IngredientServiceModel ingredientServiceModel) {
 
         Ingredient ingredient = this.ingredientRepository.
-                findById(id)
+                findById(ingredientServiceModel.getId())
                 .orElseThrow(() -> new IngredientNotFoundException(INGREDIENT_NOT_FOUND_EXCEPTION));
 
-        if (!this.ingredientValidationService.isValid(ingredientServiceModel)) {
+        if (this.ingredientValidationService.isValid(ingredientServiceModel)) {
             throw new IngredientAddException(INVALID_DATA_INPUT);
         }
 
         ingredient.setIngredientName(ingredientServiceModel.getIngredientName());
-        ingredient.setIngredientName(ingredientServiceModel.getIngredientName());
+        ingredient.setIngredientPrice(ingredientServiceModel.getIngredientPrice());
 
         this.ingredientRepository.save(ingredient);
     }
@@ -88,5 +88,13 @@ public class IngredientServiceImpl implements IngredientService {
                 .collect(Collectors.toList());
 
         return ingredientServiceModels;
+    }
+
+    @Override
+    public void deleteById(String id) {
+        Ingredient ingredient = this.ingredientRepository.findById(id)
+                .orElseThrow(() -> new IngredientNotFoundException(INGREDIENT_NOT_FOUND_EXCEPTION));
+
+        this.ingredientRepository.delete(ingredient);
     }
 }

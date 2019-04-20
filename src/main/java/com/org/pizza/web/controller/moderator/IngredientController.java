@@ -10,10 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
@@ -46,7 +43,8 @@ public class IngredientController extends BaseController {
 
     @PostMapping("/add")
     @PreAuthorize("hasRole('ROLE_MODERATOR')")
-    public ModelAndView addIngredientConfirm(@Valid @ModelAttribute(name = BINDING_MODEL) IngredientAddBindingModel bindingModel,
+    public ModelAndView addIngredientConfirm(
+            @Valid @ModelAttribute(name = BINDING_MODEL) IngredientAddBindingModel bindingModel,
                                              BindingResult bindingResult, ModelAndView modelAndView) {
 
         if (bindingResult.hasErrors()) {
@@ -75,43 +73,50 @@ public class IngredientController extends BaseController {
 
         return view("moderator/ingredient-all", modelAndView);
     }
-//    @GetMapping("/edit/{id}")
-//    @PreAuthorize("hasRole('ROLE_MODERATOR')")
-//    public ModelAndView editIngredient(@PathVariable String id,
-//                                       @Valid @ModelAttribute(name = BINDING_MODEL) IngredientAddBindingModel bindingModel,
-//                                       ModelAndView modelAndView) {
-//
-//        IngredientServiceModel ingredientServiceModel = this.ingredientService.findIngredientById(id);
-//        IngredientAddBindingModel ingredientEditBindingModel = this.modelMapper
-//                .map(ingredientServiceModel, IngredientAddBindingModel.class);
-//
-//        modelAndView.addObject("modelId", id);
-//        modelAndView.addObject("model", ingredientEditBindingModel);
-//
-//        modelAndView.addObject(BINDING_MODEL, bindingModel);
-//
-//        return view("moderator/ingredient-edit", modelAndView);
-//    }
-//
-//    @PostMapping("/edit/{id}")
-//    @PreAuthorize("hasRole('ROLE_MODERATOR')")
-//    public ModelAndView editIngredientConfirm(@PathVariable String id,
-//                                              @Valid @ModelAttribute(name = BINDING_MODEL) IngredientAddBindingModel bindingModel,
-//                                              ModelAndView modelAndView, BindingResult bindingResult) {
-//        if (bindingResult.hasErrors()) {
-//            modelAndView.addObject(BINDING_MODEL, bindingModel);
-//            return view("moderator/ingredient-edit", modelAndView);
-//        }
-//
-//        IngredientAddBindingModel ingredientEditBindingModel = this.modelMapper
-//                .map(bindingModel, IngredientAddBindingModel.class);
-//
-//        IngredientServiceModel ingredientServiceModel = this.modelMapper
-//                .map(ingredientEditBindingModel, IngredientServiceModel.class);
-//
-//        this.ingredientService.editIngredient(ingredientServiceModel, id);
-//
-//        return redirect("moderator/ingredient-all");
-//    }
 
+    @GetMapping("/edit/{id}")
+    @PreAuthorize("hasRole('ROLE_MODERATOR')")
+    public ModelAndView editIngredient(@PathVariable String id,
+                                       @ModelAttribute(name = BINDING_MODEL) IngredientAddBindingModel bindingModel,
+                                       ModelAndView modelAndView) {
+
+        IngredientServiceModel ingredientServiceModel = this.ingredientService.findIngredientById(id);
+        IngredientAddBindingModel ingredientEditBindingModel = this.modelMapper
+                .map(ingredientServiceModel, IngredientAddBindingModel.class);
+
+        modelAndView.addObject("modelId", id);
+        modelAndView.addObject(BINDING_MODEL, ingredientEditBindingModel);
+
+        return view("moderator/ingredient-edit", modelAndView);
+    }
+
+    @PostMapping("/edit/{id}")
+    @PreAuthorize("hasRole('ROLE_MODERATOR')")
+    public ModelAndView editIngredientConfirm(@PathVariable String id,
+                                              @Valid @ModelAttribute(name = BINDING_MODEL) IngredientAddBindingModel bindingModel,
+                                              BindingResult bindingResult, ModelAndView modelAndView) {
+        if (bindingResult.hasErrors()) {
+            modelAndView.addObject(BINDING_MODEL, bindingModel);
+            return view("moderator/ingredient-edit", modelAndView);
+        }
+
+        IngredientAddBindingModel ingredientEditBindingModel = this.modelMapper
+                .map(bindingModel, IngredientAddBindingModel.class);
+
+        IngredientServiceModel ingredientServiceModel = this.modelMapper
+                .map(ingredientEditBindingModel, IngredientServiceModel.class);
+        ingredientServiceModel.setId(id);
+        this.ingredientService.editIngredient(ingredientServiceModel);
+
+        return redirect("/ingredients/all");
+    }
+
+    @PostMapping("/delete/{id}")
+    @PreAuthorize("hasRole('ROLE_MODERATOR')")
+    public ModelAndView deleteCategory(@PathVariable String id) {
+
+        this.ingredientService.deleteById(id);
+
+        return redirect("/ingredients/all");
+    }
 }
