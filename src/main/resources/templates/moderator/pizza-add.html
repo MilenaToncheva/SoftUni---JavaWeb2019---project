@@ -12,20 +12,67 @@
 </header>
 <main>
     <div class="jumbotron bg-transparent text-center mainBodyText">
-        <h2>Add New Category</h2>
+        <h2>Add New Pizza</h2>
         <hr class="customHr">
-        <form th:action="@{/categories/add}" th:method="post">
+        <form th:action="@{/pizzas/add}" th:method="post">
 
             <div class="form-group mx-auto"
-                 th:classappend="${#fields.hasErrors('categoryName')} ? 'customErrorMessageColor'"
+                 th:classappend="${#fields.hasErrors('name')} ? 'customErrorMessageColor'"
                  th:object="${bindingModel}">
-                <label for="categoryName">Category name:</label>
-                <input class="form-control w-auto mx-auto" id="categoryName" required
-                       th:field="*{categoryName}" type="text">
-                <small id="categoryNameHelp" th:each="error : ${#fields.errors('categoryName')}"
+                <label for="name">Pizza name:</label>
+                <input class="form-control w-auto mx-auto" id="name" required
+                       th:field="*{name}" type="text">
+                <small id="nameHelp" th:each="error : ${#fields.errors('name')}"
+                       th:text="${error}"></small>
+            </div>
+            <div class="form-group mx-auto"
+                 th:classappend="${#fields.hasErrors('price')} ? 'customErrorMessageColor'"
+                 th:object="${bindingModel}">
+                <label for="price">Price:</label>
+                <input class="form-control w-auto mx-auto" id="price" min="0.00"
+                       pattern="^((?:[1-9][0-9]*)(?:\.[0-9]+)?)$" placeholder="0.00" required step="any"
+                       th:field="*{price}" type="number">
+                <small id="priceHelp" th:each="error : ${#fields.errors('price')}"
                        th:text="${error}"></small>
             </div>
 
+            <div class="form-group mx-auto"
+                 th:classappend="${#fields.hasErrors('grams')} ? 'customErrorMessageColor'"
+                 th:object="${bindingModel}">
+                <label for="grams">Grams:</label>
+                <input class="form-control w-auto mx-auto" id="grams" min="0.00"
+                       pattern="^((?:[1-9][0-9]*)(?:\.[0-9]+)?)$" placeholder="0.00" required step="any"
+                       th:field="*{grams}" type="number">
+                <small id="gramsHelp" th:each="error : ${#fields.errors('grams')}"
+                       th:text="${error}"></small>
+            </div>
+
+            <label class="mx-auto" for="price">Category:</label>
+            <div class="form-group customCheckBox mx-auto">
+                <ul th:each="category : ${categories}" th:object="${bindingModel}">
+                    <li>
+                        <input class="customCheckBoxLabel" th:id="${category.categoryName}" type="checkbox"/>
+                        <label class="ml-2" th:for="${category.categoryName}"
+                               th:text="${category.categoryName}"></label>
+                    </li>
+                </ul>
+            </div>
+            <label class="mx-auto" for="price">Ingredients:</label>
+            <div class="form-group customCheckBox mx-auto">
+                <ul th:each="ingredient : ${ingredients}" th:object="${bindingModel}">
+                    <li>
+                        <input class="customCheckBoxLabel" th:id="${ingredient.ingredientName}" type="checkbox"/>
+                        <label class="ml-2" th:for="${ingredient.ingredientName}"
+                               th:text="${ingredient.ingredientName} +| - |+ ${ingredient.ingredientPrice}+| $|"></label>
+                    </li>
+                </ul>
+            </div>
+            <div class="form-group mx-auto"
+                 th:object="${bindingModel}">
+                <label for="pizzaPicture">Picture:</label>
+                <input class="form-control addPizzaPic mx-auto " id="pizzaPicture"
+                       th:field="*{image}" type="file">
+            </div>
             <button class="customButtonRegister" type="submit">Add</button>
         </form>
     </div>

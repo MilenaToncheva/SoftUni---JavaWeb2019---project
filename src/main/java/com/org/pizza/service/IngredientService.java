@@ -7,9 +7,11 @@ import java.util.List;
 public interface IngredientService {
     void addNewIngredient(IngredientServiceModel ingredientServiceModel);
 
-    void editIngredient(IngredientServiceModel ingredientServiceModel, String id);
+    void editIngredient(IngredientServiceModel ingredientServiceModel);
 
     IngredientServiceModel findIngredientById(String id);
 
     List<IngredientServiceModel> findAllIngredients();
+
+    void deleteById(String id);
 }

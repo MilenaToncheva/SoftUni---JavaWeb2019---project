@@ -12,29 +12,26 @@
 </header>
 <main>
     <div class="jumbotron-fluid mainBody my-4">
-        <h1 class="text-center">All Ingredients</h1>
+        <h1 class="text-center">All Categories</h1>
         <hr class="hr-2 bg-dark">
         <table class="customTable table-hover mx-auto">
             <thead>
             <tr class="row mx-auto mb-4 font-weight-bold">
                 <th class="col-md-2 text-center">#</th>
-                <th class="col-md-3 text-center">Ingredient Name</th>
-                <th class="col-md-3 text-center">Price</th>
+                <th class="col-md-3 text-center"></th>
+                <th class="col-md-3 text-center">Category Name</th>
                 <th class="col-md-4 text-center">Actions</th>
             </tr>
             </thead>
             <tbody>
-
             <th:block th:each="model, iter : ${bindingModel}">
+
                 <tr class="row mx-auto">
                     <th class="col-md-2 customRow text-center" th:text="${iter.index+1}"></th>
-                    <td class="col-md-3 customRow text-center" th:text="${model.ingredientName}"></td>
-                    <td class="col-md-3 customRow text-center" th:text="${model.ingredientPrice}"></td>
-                    <td class="col-md-4  text-center">
-                        <form th:action="@{/ingredients/edit/{id}(id=${model.id})}" th:method="get">
-                            <button class="btn customRoleButton customRoleColor">Edit</button>
-                        </form>
-                        <form th:action="@{/ingredients/delete/{id}(id=${model.id})}" th:method="post">
+                    <td class="col-md-3 customRow text-center"></td>
+                    <td class="col-md-3 customRow text-center" th:text="${model.categoryName}"></td>
+                    <td class="col-md-4 text-center">
+                        <form th:action="@{/categories/delete/{id}(id=${model.id})}" th:method="post">
                             <button class="btn customRoleButton customRoleColor">Delete</button>
                         </form>
                     </td>
