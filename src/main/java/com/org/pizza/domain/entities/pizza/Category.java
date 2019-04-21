@@ -17,7 +17,7 @@ public class Category extends BaseEntity {
 
 
     @NotEmpty
-    @Column(name = "category_name", nullable = false, unique = true, columnDefinition = "VARCHAR (20)")
+    @Column(name = "category_name", unique = true, nullable = false, columnDefinition = "VARCHAR (20)")
     @Length(min = 3, max = 20, message = PizzaCreationViolationMessages.CATEGORY_INCORRECT_NAME_LENGTH)
     public String getCategoryName() {
         return this.categoryName;

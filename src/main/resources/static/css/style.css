@@ -102,6 +102,10 @@ body {
     width: 60%;
 }
 
+.ingredientsFontSize {
+    font-size: 12px;
+!important;
+}
 .addressBox {
     border: black 1px solid;
     border-radius: 8px;

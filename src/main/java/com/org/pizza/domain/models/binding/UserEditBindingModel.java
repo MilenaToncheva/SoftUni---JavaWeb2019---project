@@ -3,6 +3,8 @@ package com.org.pizza.domain.models.binding;
 import com.org.pizza.constant.userMessages.UserRegistrationViolationMassages;
 import org.hibernate.validator.constraints.Length;
 
+import javax.validation.constraints.NotNull;
+
 
 public class UserEditBindingModel {
 
@@ -28,6 +30,7 @@ public class UserEditBindingModel {
         this.oldPassword = oldPassword;
     }
 
+    @NotNull
     @Length(min = 4, max = 60, message = UserRegistrationViolationMassages.USER_INCORRECT_PASSWORD_LENGTH)
     public String getPassword() {
         return this.password;
@@ -37,7 +40,7 @@ public class UserEditBindingModel {
         this.password = password;
     }
 
-
+    @NotNull
     @Length(min = 4, max = 60, message = UserRegistrationViolationMassages.USER_INCORRECT_PASSWORD_LENGTH)
     public String getConfirmPassword() {
         return this.confirmPassword;
@@ -47,7 +50,7 @@ public class UserEditBindingModel {
         this.confirmPassword = confirmPassword;
     }
 
-
+    @NotNull
     @Length(min = 10, max = 10, message = UserRegistrationViolationMassages.USER_INCORRECT_PHONE_LENGTH)
     public String getPhoneNumber() {
         return this.phoneNumber;

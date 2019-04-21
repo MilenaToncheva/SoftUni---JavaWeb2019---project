@@ -7,7 +7,6 @@ import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 import javax.validation.constraints.DecimalMin;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import java.math.BigDecimal;
 import java.util.Set;
@@ -54,9 +53,9 @@ public class Pizza extends BaseEntity {
         this.imageUrl = imageUrl;
     }
 
-    @NotEmpty
+
     @Column(name = "grams", nullable = false)
-   @DecimalMin(value = "0.01", message = PizzaCreationViolationMessages.PIZZA_INCORRECT_GRAM_VALUE)
+    @DecimalMin(value = "0.01", message = PizzaCreationViolationMessages.PIZZA_INCORRECT_GRAM_VALUE)
     public Double getGrams() {
         return this.grams;
     }
@@ -66,7 +65,7 @@ public class Pizza extends BaseEntity {
     }
 
     @ManyToMany(targetEntity = Ingredient.class)
-    @JoinTable(name = "pizza_category",
+    @JoinTable(name = "pizza_ingredients",
             joinColumns = @JoinColumn(name = "pizza_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "category_id", referencedColumnName = "id"))
     public Set<Ingredient> getIngredients() {
@@ -78,6 +77,7 @@ public class Pizza extends BaseEntity {
     }
 
     @OneToMany
+    @JoinColumn(name = "pizza_id", referencedColumnName = "id")
     public Set<Category> getCategories() {
         return this.categories;
     }

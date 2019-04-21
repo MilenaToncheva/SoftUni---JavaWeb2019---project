@@ -3,10 +3,10 @@ package com.org.pizza.service;
 import com.org.pizza.domain.entities.pizza.Category;
 import com.org.pizza.domain.models.service.CategoryServiceModel;
 import com.org.pizza.repository.CategoryRepository;
+import com.org.pizza.validation.categoryValidation.CategoryValidationService;
 import com.org.pizza.validation.errors.CategoryAddException;
 import com.org.pizza.validation.errors.CategoryAlreadyExistException;
 import com.org.pizza.validation.errors.CategoryNotFoundException;
-import com.org.pizza.validation.categoryValidation.CategoryValidationService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -68,5 +68,13 @@ public class CategoryServiceImpl implements CategoryService {
                 .orElseThrow(() -> new CategoryNotFoundException(CATEGORY_NOT_FOUND_EXCEPTION));
 
         this.categoryRepository.delete(category);
+    }
+
+    @Override
+    public CategoryServiceModel findById(String id) {
+        Category category = this.categoryRepository.findById(id)
+                .orElseThrow(() -> new CategoryNotFoundException(CATEGORY_NOT_FOUND_EXCEPTION));
+        CategoryServiceModel categoryServiceModel = this.modelMapper.map(category, CategoryServiceModel.class);
+        return categoryServiceModel;
     }
 }

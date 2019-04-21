@@ -14,7 +14,7 @@
     <div class="jumbotron bg-transparent text-center mainBodyText">
         <h2>Add New Pizza</h2>
         <hr class="customHr">
-        <form th:action="@{/pizzas/add}" th:method="post">
+        <form enctype="multipart/form-data" th:action="@{/pizzas/add}" th:method="post">
 
             <div class="form-group mx-auto"
                  th:classappend="${#fields.hasErrors('name')} ? 'customErrorMessageColor'"
@@ -47,31 +47,34 @@
                        th:text="${error}"></small>
             </div>
 
-            <label class="mx-auto" for="price">Category:</label>
+            <label class="mx-auto">Category:</label>
             <div class="form-group customCheckBox mx-auto">
-                <ul th:each="category : ${categories}" th:object="${bindingModel}">
-                    <li>
-                        <input class="customCheckBoxLabel" th:id="${category.categoryName}" type="checkbox"/>
+                <ul>
+                    <li th:each="category : ${categories}" th:object="${bindingModel}">
+                        <input class="customCheckBoxLabel" th:field="*{categories}" th:id="${category.categoryName}"
+                               th:value="${category.id}" type="checkbox"/>
                         <label class="ml-2" th:for="${category.categoryName}"
                                th:text="${category.categoryName}"></label>
                     </li>
                 </ul>
             </div>
-            <label class="mx-auto" for="price">Ingredients:</label>
+
+            <label class="mx-auto">Ingredients:</label>
             <div class="form-group customCheckBox mx-auto">
-                <ul th:each="ingredient : ${ingredients}" th:object="${bindingModel}">
-                    <li>
-                        <input class="customCheckBoxLabel" th:id="${ingredient.ingredientName}" type="checkbox"/>
+                <ul>
+                    <li th:each="ingredient : ${ingredients}" th:object="${bindingModel}">
+                        <input class="customCheckBoxLabel" th:field="*{ingredients}"
+                               th:id="${ingredient.ingredientName}"
+                               th:value="${ingredient.id}" type="checkbox"/>
                         <label class="ml-2" th:for="${ingredient.ingredientName}"
                                th:text="${ingredient.ingredientName} +| - |+ ${ingredient.ingredientPrice}+| $|"></label>
                     </li>
                 </ul>
             </div>
-            <div class="form-group mx-auto"
-                 th:object="${bindingModel}">
+            <div class="form-group mx-auto" th:object="${bindingModel}">
                 <label for="pizzaPicture">Picture:</label>
-                <input class="form-control addPizzaPic mx-auto " id="pizzaPicture"
-                       th:field="*{image}" type="file">
+                <input class="form-control addPizzaPic mx-auto " id="pizzaPicture" th:field="*{image}"
+                       type="file">
             </div>
             <button class="customButtonRegister" type="submit">Add</button>
         </form>
@@ -80,5 +83,6 @@
 <footer>
     <th:block th:include="~{fragments/footer}"/>
 </footer>
+
 </body>
 </html>

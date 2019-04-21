@@ -11,4 +11,6 @@ public interface CategoryService {
     List<CategoryServiceModel> findAllCategories();
 
     void deleteById(String id);
+
+    CategoryServiceModel findById(String id);
 }
