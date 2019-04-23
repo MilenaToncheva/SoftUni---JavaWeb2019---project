@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+>
+<head>
+    <th:block th:include="~{fragments/head}"/>
+</head>
+<body>
+<header>
+    <th:block th:include="~{fragments/navbar}"/>
+</header>
+<main>
+
+    <div class="jumbotron mainBody mt-4">
+        <p style="color: #0c5460" th:text="${statusCode}"></p>
+        <hr class="hr-2 bg-dark">
+        <div class="text-center">
+            <h3 th:text="${message}"></h3>
+            <p class="" th:text="${statusCode}">
+            <div class="menuBox mx-auto">
+                <img alt="error"
+                     class="errorPage mx-auto mb-2"
+                     th:src="@{https://res.cloudinary.com/turtei/image/upload/v1554945330/pizzaApp/basePics/errorImg.jpg}">
+            </div>
+        </div>
+        <h1 class="text-center text-dark">Something Went Wrong</h1>
+
+    </div>
+</main>
+<footer>
+    <th:block th:include="~{fragments/footer}"/>
+</footer>
+</body>
+</html>
