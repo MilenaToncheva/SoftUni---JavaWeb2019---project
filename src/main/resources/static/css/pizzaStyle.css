@@ -1,0 +1,47 @@
+
+.pizzaBox {
+    border: #DB3545 2px solid;
+    width: 180px;
+    text-align: center;
+    padding: 8px 12px;
+    margin: 10px 10px;
+    background: #ebebeb;
+    display: inline-block;
+
+}
+
+.pizzaBox:hover {
+    background: #040505;
+    color: yellow;
+}
+
+.pizzaPic {
+    width: 150px;
+    height: 150px;
+    border-radius: 2px;
+}
+
+.pizzaBoxOrderButton {
+    background: #DB3545;
+    padding: 4px;
+    border-radius: 4px;
+    font-weight: bold;
+    color: white;
+    width: 80%;
+    letter-spacing: 3px;
+    border: none;
+}
+
+.pizzaBoxOrderButton:hover {
+    background: #11ff00
+}
+
+.menuBox {
+    padding: 0 11%;
+
+}
+
+.pizzaName {
+    font-weight: bold;
+    min-width: 130px;
+}
