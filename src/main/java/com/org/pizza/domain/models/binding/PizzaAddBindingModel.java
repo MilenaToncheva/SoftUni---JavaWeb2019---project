@@ -2,13 +2,9 @@ package com.org.pizza.domain.models.binding;
 
 import com.org.pizza.constant.commonMessages.CommonMessages;
 import com.org.pizza.constant.pizzaMessages.PizzaCreationViolationMessages;
-import com.org.pizza.domain.entities.pizza.Category;
-import com.org.pizza.domain.entities.pizza.Ingredient;
-import com.org.pizza.domain.models.service.CategoryServiceModel;
-import com.org.pizza.domain.models.service.IngredientServiceModel;
+
 import org.hibernate.validator.constraints.Length;
 import org.springframework.web.multipart.MultipartFile;
-
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -20,8 +16,8 @@ public class PizzaAddBindingModel {
     private BigDecimal price;
     private MultipartFile image;
     private Double grams;
-    private Set<IngredientServiceModel> ingredients;
-    private Set<CategoryServiceModel> categories;
+    private Set<String> ingredients;
+    private Set<String> categories;
 
     @NotEmpty
     @NotNull
@@ -34,8 +30,8 @@ public class PizzaAddBindingModel {
         this.name = name;
     }
 
+
     @NotNull
-    @NotEmpty
     @DecimalMin(value = "0.01", message = CommonMessages.MIN_PRICE)
     public BigDecimal getPrice() {
         return this.price;
@@ -53,7 +49,7 @@ public class PizzaAddBindingModel {
         this.image = image;
     }
 
-    @NotEmpty
+
     @NotNull
     @DecimalMin(value = "0.01", message = PizzaCreationViolationMessages.PIZZA_INCORRECT_GRAM_VALUE)
     public Double getGrams() {
@@ -64,19 +60,19 @@ public class PizzaAddBindingModel {
         this.grams = grams;
     }
 
-    public Set<IngredientServiceModel> getIngredients() {
+    public Set<String> getIngredients() {
         return this.ingredients;
     }
 
-    public void setIngredients(Set<IngredientServiceModel> ingredients) {
+    public void setIngredients(Set<String> ingredients) {
         this.ingredients = ingredients;
     }
 
-    public Set<CategoryServiceModel> getCategories() {
+    public Set<String> getCategories() {
         return this.categories;
     }
 
-    public void setCategories(Set<CategoryServiceModel> categories) {
+    public void setCategories(Set<String> categories) {
         this.categories = categories;
     }
 }

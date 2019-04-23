@@ -5,6 +5,9 @@
 >
 <head>
     <th:block th:include="~{fragments/head}"/>
+    <link rel="stylesheet" th:href="@{/css/intlTelInput.min.css}">
+    <script th:src="@{/js/intlTelInput.min.js}"></script>
+    <!--        <script th:src="@{/js/popper.min.js}"></script>-->
 </head>
 <body>
 <header>
@@ -14,7 +17,7 @@
     <div class="jumbotron bg-transparent text-center mainBodyText">
         <h2>Register</h2>
         <hr class="customHr">
-        <form th:action="@{/users/register}" th:method="post" th:object="${bindingModel}">
+        <form id="registerForm" th:action="@{/users/register}" th:method="post" th:object="${bindingModel}">
 
             <div class="form-group mx-auto"
                  th:classappend="${#fields.hasErrors('firstName')} ? 'customErrorMessageColor'">
@@ -64,19 +67,14 @@
             </div>
             <div class="form-group mx-auto"
                  th:classappend="${#fields.hasErrors('phoneNumber')} ? 'customErrorMessageColor'">
-                <label for="phoneNumber">Phone number:</label>
-                <input class="form-control w-auto mx-auto" id="phoneNumber" pattern="^[0]{1}[0-9]{9}$" required
-                       th:field="*{phoneNumber}" type="tel">
+                <label for="phone">Phone number:</label>
+                <input class="form-control mx-auto phoneInput" id="phone" max="13"
+                       min="5" required th:field="*{phoneNumber}" type="tel">
+                <br/>
                 <small id="phoneNumberHelp" th:each="error : ${#fields.errors('phoneNumber')}"
                        th:text="${error}"></small>
             </div>
-            <!--            <div class="form-group mx-auto" th:classappend="${#fields.hasErrors('phoneNumber')} ? 'text-danger'">-->
-            <!--                <label for="phone">Phone number:</label>-->
-            <!--                <input class="form-control w-auto mx-auto" id="phone" pattern="^[0]{1}[1-9]{9}$" required-->
-            <!--                       th:field="*{phoneNumber}" type="tel">-->
-            <!--                <small id="inputPhoneNumberHelp" th:each="error : ${#fields.errors('phoneNumber')}"-->
-            <!--                       th:text="${error}"></small>-->
-            <!--            </div>-->
+
             <button class="customButtonRegister" type="submit">Register</button>
         </form>
     </div>
@@ -99,6 +97,27 @@
     password.onchange = validatePassword;
     confirmPassword.onkeyup = validatePassword;
 
+</script>
+<script>
+
+    let input = document.querySelector("#phone");
+    let iti = window.intlTelInput(input, {
+        utilsScript: "/js/utils.js",
+        initialCountry: "bg",
+        separateDialCode: true,
+        customPlaceholder: function (selectedCountryPlaceholder, selectedCountryData) {
+            return "8" + selectedCountryPlaceholder;
+        },
+    });
+
+    $('#registerForm').submit(function () {
+        let countryData = iti.getSelectedCountryData().dialCode;
+        let inputData = document.getElementById('phone');
+        inputData.value = countryData + inputData.value;
+        console.log(inputData.value);
+        console.log(countryData);
+        return true; // return false to cancel form action
+    });
 </script>
 </body>
 </html>

@@ -1,3 +1,7 @@
+body {
+    min-width: 300px;
+}
+
 .banner-background {
     width: 100%;
     height: 300px;
@@ -102,6 +106,11 @@ body {
     width: 60%;
 }
 
+.ingredientsFontSize {
+    font-size: 12px;
+!important;
+}
+
 .addressBox {
     border: black 1px solid;
     border-radius: 8px;
@@ -164,6 +173,9 @@ body {
     font-weight: bold;
 }
 
+label {
+    display: block;
+}
 
 .addPizzaPic:hover {
 
@@ -174,6 +186,11 @@ body {
     color: yellow;
 }
 
+.phoneInput {
+    width: 200px;
+!important;
+}
+
 .customCheckBox {
     display: block;
     width: 200px;
@@ -181,15 +198,23 @@ body {
     border: 1px #ebebeb solid;
     border-radius: 5px;
     padding: 1%;
+
 }
 
-
-.customCheckBoxLabel:checked + label {
-    color: yellow;
+.customCheckBoxLabel {
+    display: inline-block;
+    font-size: 12px;
 }
 
 .customErrorMessageColor {
     color: #cee802;
+}
+
+.customRadioButtons {
+    display: inline-block;
+    margin-left: 1%;
+    padding-left: 3%;
+    font-weight: bold;
 }
 
 .footer-icons {

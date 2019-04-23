@@ -31,7 +31,6 @@ public class PizzaServiceModel extends BaseServiceModel {
     }
 
     @NotNull
-    @NotEmpty
     @DecimalMin(value = "0.01", message = CommonMessages.MIN_PRICE)
     public BigDecimal getPrice() {
         return this.price;
@@ -49,7 +48,7 @@ public class PizzaServiceModel extends BaseServiceModel {
         this.imageUrl = imageUrl;
     }
 
-    @NotEmpty
+
     @NotNull
     @DecimalMin(value = "0.01", message = PizzaCreationViolationMessages.PIZZA_INCORRECT_GRAM_VALUE)
     public Double getGrams() {

@@ -101,7 +101,7 @@ public class UserController extends BaseController {
 
         List<UserServiceModel> userServiceModels = this.userService.findAllUsers();
         List<UserAllViewModel> userAllViewModels = mapUserToUserAllViewModel(userServiceModels);
-        modelAndView.addObject("model", userAllViewModels);
+        modelAndView.addObject(BINDING_MODEL, userAllViewModels);
 
         return view("all-users", modelAndView);
     }

@@ -56,11 +56,12 @@ public class IngredientController extends BaseController {
         this.ingredientService.addNewIngredient(ingredientServiceModel);
 
         return redirect("/ingredients/all");
+//        return view("moderator/ingredient-add", modelAndView);
     }
 
     @GetMapping("/all")
     @PreAuthorize("hasRole('ROLE_MODERATOR')")
-    public ModelAndView allCategories(ModelAndView modelAndView) {
+    public ModelAndView allIngredients(ModelAndView modelAndView) {
 
         List<IngredientServiceModel> categoryServiceModels = this.ingredientService.findAllIngredients();
         List<IngredientViewModel> categoryViewModelList = categoryServiceModels
@@ -113,7 +114,7 @@ public class IngredientController extends BaseController {
 
     @PostMapping("/delete/{id}")
     @PreAuthorize("hasRole('ROLE_MODERATOR')")
-    public ModelAndView deleteCategory(@PathVariable String id) {
+    public ModelAndView deleteIngredient(@PathVariable String id) {
 
         this.ingredientService.deleteById(id);
 
