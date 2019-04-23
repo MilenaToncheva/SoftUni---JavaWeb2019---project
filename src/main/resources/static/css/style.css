@@ -8,6 +8,10 @@ body {
     border: 1px solid red;
 }
 
+.errorPage {
+    border-radius: 5px;
+    display: block;
+}
 
 .navbar-color {
     background: yellow;
