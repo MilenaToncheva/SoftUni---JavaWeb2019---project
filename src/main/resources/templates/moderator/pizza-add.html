@@ -28,7 +28,7 @@
             <div class="form-group mx-auto"
                  th:classappend="${#fields.hasErrors('price')} ? 'customErrorMessageColor'"
                  th:object="${bindingModel}">
-                <label for="price">Price:</label>
+                <label for="price">Base Price:</label>
                 <input class="form-control w-auto mx-auto" id="price" min="0.00"
                        pattern="^((?:[1-9][0-9]*)(?:\.[0-9]+)?)$" placeholder="0.00" required step="any"
                        th:field="*{price}" type="number">
@@ -53,7 +53,7 @@
                     <li th:each="category : ${categories}" th:object="${bindingModel}">
                         <input class="customCheckBoxLabel" th:field="*{categories}" th:id="${category.categoryName}"
                                th:value="${category.id}" type="checkbox"/>
-                        <label class="ml-2" th:for="${category.categoryName}"
+                        <label class="ml-2 customCheckBoxLabel" th:for="${category.categoryName}"
                                th:text="${category.categoryName}"></label>
                     </li>
                 </ul>
@@ -66,7 +66,7 @@
                         <input class="customCheckBoxLabel" th:field="*{ingredients}"
                                th:id="${ingredient.ingredientName}"
                                th:value="${ingredient.id}" type="checkbox"/>
-                        <label class="ml-2" th:for="${ingredient.ingredientName}"
+                        <label class="ml-2 customCheckBoxLabel" th:for="${ingredient.ingredientName}"
                                th:text="${ingredient.ingredientName} +| - |+ ${ingredient.ingredientPrice}+| $|"></label>
                     </li>
                 </ul>

@@ -8,12 +8,20 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public class PizzaAllViewModel {
-
+    private String id;
     private String name;
     private BigDecimal price;
     private Double grams;
     private Set<String> ingredients;
     private Set<String> categories;
+
+    public String getId() {
+        return this.id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getName() {
         return this.name;

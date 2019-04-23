@@ -3,6 +3,7 @@ package com.org.pizza.domain.models.binding;
 import com.org.pizza.constant.userMessages.UserRegistrationViolationMassages;
 import org.hibernate.validator.constraints.Length;
 
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 
@@ -14,6 +15,9 @@ public class UserEditBindingModel {
     private String confirmPassword;
     private String phoneNumber;
 
+    @NotNull
+    @NotEmpty
+    @Length(min = 4, max = 16, message = UserRegistrationViolationMassages.USER_INCORRECT_FIRST_NAME_LENGTH)
     public String getUsername() {
         return this.username;
     }

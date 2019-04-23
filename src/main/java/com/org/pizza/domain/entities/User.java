@@ -79,8 +79,8 @@ public class User extends BaseEntity implements UserDetails {
     }
 
     @NotEmpty
-    @Column(name = "phone_number", unique = true, nullable = false, columnDefinition = "VARCHAR (10)")
-    @Length(min = 10, max = 10, message = UserRegistrationViolationMassages.USER_INCORRECT_PHONE_LENGTH)
+    @Column(name = "phone_number", unique = true, nullable = false, columnDefinition = "VARCHAR (13)")
+    @Length(min = 5, max = 13, message = UserRegistrationViolationMassages.USER_INCORRECT_PHONE_LENGTH)
     public String getPhoneNumber() {
         return this.phoneNumber;
     }

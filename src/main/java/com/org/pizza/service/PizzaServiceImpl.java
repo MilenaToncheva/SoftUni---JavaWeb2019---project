@@ -9,6 +9,7 @@ import com.org.pizza.domain.models.service.PizzaServiceModel;
 import com.org.pizza.repository.PizzaRepository;
 import com.org.pizza.validation.errors.PizzaAddException;
 import com.org.pizza.validation.errors.PizzaAlreadyExistException;
+import com.org.pizza.validation.errors.PizzaNotFoundException;
 import com.org.pizza.validation.pizzaValidation.PizzaValidationService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,12 +17,15 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 import static com.org.pizza.constant.commonMessages.CommonMessages.INVALID_DATA_INPUT;
 import static com.org.pizza.constant.errorMessages.pizza.PizzaErrorMessages.PIZZA_ALREADY_EXIST;
+import static com.org.pizza.constant.errorMessages.pizza.PizzaErrorMessages.PIZZA_NOT_FOUND_EXCEPTION;
+import static com.org.pizza.constant.pizzaMessages.PizzaCreationViolationMessages.PIZZA_MISSING_PIC_URL;
 
 @Service
 public class PizzaServiceImpl implements PizzaService {
@@ -52,7 +56,7 @@ public class PizzaServiceImpl implements PizzaService {
         }
         if (pizzaServiceModel.getImageUrl() == null) {
             pizzaServiceModel
-                    .setImageUrl("https://res.cloudinary.com/turtei/image/upload/v1555803645/pizzaApp/basePics/pizzaImageMissing.jpg");
+                    .setImageUrl(PIZZA_MISSING_PIC_URL);
         }
 
         pizza = this.modelMapper.map(pizzaServiceModel, Pizza.class);
@@ -65,6 +69,43 @@ public class PizzaServiceImpl implements PizzaService {
         pizza.setPrice(pizzaTotalPrice);
 
         this.pizzaRepository.save(pizza);
+    }
+
+
+    @Override
+    public List<PizzaServiceModel> findAll() {
+        List<Pizza> pizzas = this.pizzaRepository.findAll();
+        List<PizzaServiceModel> pizzaServiceModels = getConvertedPizzaToPizzaServiceModel(pizzas);
+
+        return pizzaServiceModels;
+    }
+
+
+    @Override
+    public void deleteById(String id) {
+        Pizza pizza = this.pizzaRepository.findById(id)
+                .orElseThrow(() -> new PizzaNotFoundException(PIZZA_NOT_FOUND_EXCEPTION));
+
+        this.pizzaRepository.delete(pizza);
+    }
+
+    @Override
+    public List<PizzaServiceModel> findAllPizzasByCategoryName(String categoryName) {
+        List<Pizza> pizzas = this.pizzaRepository
+                .findAllByCategoriesContains(categoryName);
+
+        List<PizzaServiceModel> pizzaServiceModels = getConvertedPizzaToPizzaServiceModel(pizzas);
+
+        return pizzaServiceModels;
+    }
+
+    @Override
+    public LinkedList<PizzaServiceModel> findAllByOrderByName() {
+        LinkedList<Pizza> pizzas = this.pizzaRepository.findAllByOrderByName();
+        LinkedList<PizzaServiceModel> pizzaServiceModels = pizzas.stream()
+                .map(p -> this.modelMapper.map(p, PizzaServiceModel.class))
+                .collect(Collectors.toCollection(LinkedList::new));
+        return pizzaServiceModels;
     }
 
     private BigDecimal getTotalIngredientsPrice(Set<Ingredient> ingredients) {
@@ -94,12 +135,8 @@ public class PizzaServiceImpl implements PizzaService {
         return categories;
     }
 
-    @Override
-    public List<PizzaServiceModel> findAll() {
-        List<Pizza> pizzas = this.pizzaRepository.findAll();
-
-
-        List<PizzaServiceModel> pizzaServiceModels = pizzas.stream()
+    private List<PizzaServiceModel> getConvertedPizzaToPizzaServiceModel(List<Pizza> pizzas) {
+        return pizzas.stream()
                 .map(p -> {
                     PizzaServiceModel pizzaServiceModel =
                             this.modelMapper.map(p, PizzaServiceModel.class);
@@ -108,8 +145,6 @@ public class PizzaServiceImpl implements PizzaService {
                     return pizzaServiceModel;
                 })
                 .collect(Collectors.toList());
-
-        return pizzaServiceModels;
     }
 
     private void convertIngredientsToIngredientServiceModel(Pizza p, PizzaServiceModel pizzaServiceModel) {

@@ -5,6 +5,7 @@
 >
 <head>
     <th:block th:include="~{fragments/head}"/>
+    <link rel="stylesheet" th:href="@{/css/pizzaStyle.css}">
 </head>
 <body>
 <header>
@@ -12,21 +13,102 @@
 </header>
 <main>
     <div class="jumbotron mainBody mt-4">
-        <div class="print-scheduled col-md-2 bg-exodia rounded">
-            <h5 class="text-center text-white font-weight-bold py-3 mt-3">title</h5>
-            <hr class="bg-white">
-            <div class="buttons-holder w-75 mx-auto d-flex justify-content-between">
-                <a
-                        class="btn bg-exodia text-white font-weight-bold mb-3">Print</a>
-                <a
-                        class="btn bg-exodia text-white font-weight-bold mb-3">Details</a>
-            </div>
+        <h2 class="text-center">Menu</h2>
+        <hr class="hr-2 bg-dark">
+        <th:block th:each="category : ${categories}">
+            <label class="customRadioButtons" th:for="${category.categoryName}">
+                <input class="mr-2" th:checked="${category.categoryName == 'all'}" th:id="${category.categoryName}"
+                       th:name="radioSwitch"
+                       th:text="${category.categoryName}"
+                       th:type="radio"
+                       th:value="${category.categoryName}"></label>
+        </th:block>
+
+        <label class="customRadioButtons" for="drinks">
+            <input class="mr-2" id="drinks" th:name="radioSwitch" type="radio"
+                   value="drinks">drinks</label>
+        <hr class="hr-2 bg-dark">
+        <!--                <th:block th:each="pizza : ${bindingModel.pizzas}">-->
+
+        <div class="menuBox text-left justify-content-lg-start justify-content-lg-start" id="menuBoxList">
+            <th:block th:each="pizza : ${bindingModel}">
+                <div th:class="|pizzaBox rounded |+ ${#strings.listJoin(pizza.categories, ' ')}">
+                    <img alt="pizzaPic" class="pizzaPic" th:src="${pizza.imageUrl}">
+                    <div class="pizzaName" th:text="${pizza.name}"></div>
+                    <div class="pizzaPrice" th:text="|Price: |+${pizza.price}"> $4.44</div>
+                    <button class="pizzaBoxOrderButton">Order</button>
+                </div>
+            </th:block>
         </div>
     </div>
-
 </main>
 <footer>
     <th:block th:include="~{fragments/footer}"/>
 </footer>
+<script>
+    $(function () {
+        $("input[name='radioSwitch']").on('change', async function (event) {
+            let selectedOption = event.target.id;
+            console.warn(selectedOption)
+            let children;
+            switch (selectedOption) {
+                case "all":
+                    showItems(getChildren());
+                    break;
+                case "spicy":
+                    hideItems(getChildren());
+                    children = document.getElementsByClassName("SPICY");
+                    showItems(Array.from(children));
+                    break;
+                case "vegetarian":
+                    hideItems(getChildren());
+                    children = document.getElementsByClassName("VEGETARIAN");
+                    showItems(Array.from(children));
+                    break;
+                case "drinks":
+                    hideItems(getChildren());
+                    if (window.drinksLoaded) {
+                        let drinks = Array.from(document.getElementsByClassName("drinks"));
+                        drinks.forEach(item => item.style.display = "inline-block")
+                    } else {
+                        window.drinksLoaded = true;
+                        let data = await request('/menu/drinks');
+                        data.forEach(item => {
+                            let div = $("<div>").addClass("pizzaBox rounded drinks").show()
+                                .append($("<img>").addClass("pizzaPic").attr('src', item.imageUrl))
+                                .append($("<div>").addClass("pizzaName").text(item.name))
+                                .append($("<div>").addClass("pizzaPrice").text(item.price))
+                                .append($("<button>").addClass("pizzaBoxOrderButton").text("Order"));
+                            $('#menuBoxList').append(div);
+                        })
+
+                    }
+                    break;
+                default:
+                    return new Error("")
+            }
+        })
+    });
+
+    function getChildren() {
+
+        console.log(document.getElementsByClassName('menuBox')[0].children);
+        return Array.from(document.getElementsByClassName('menuBox')[0].children);
+    }
+
+    function hideItems(menuChildren) {
+        menuChildren.forEach((item) => item.style.display = 'none')
+    }
+
+    function showItems(menuChildren) {
+        menuChildren.forEach((item) => item.style.display = 'inline-block')
+    }
+
+    let request = async (href) => {
+        const response = await fetch(href);
+        return await response.json();
+    };
+</script>
+
 </body>
 </html>

@@ -11,6 +11,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -59,6 +60,15 @@ public class CategoryServiceImpl implements CategoryService {
                 .stream()
                 .map(c -> this.modelMapper.map(c, CategoryServiceModel.class))
                 .collect(Collectors.toList());
+        return categoryServiceModels;
+    }
+
+    @Override
+    public LinkedList<CategoryServiceModel> findAllOrderByName() {
+        LinkedList<Category> categories = this.categoryRepository.findAllOrderByName();
+        LinkedList<CategoryServiceModel> categoryServiceModels = categories.stream()
+                .map(c -> this.modelMapper.map(c, CategoryServiceModel.class))
+                .collect(Collectors.toCollection(LinkedList::new));
         return categoryServiceModels;
     }
 

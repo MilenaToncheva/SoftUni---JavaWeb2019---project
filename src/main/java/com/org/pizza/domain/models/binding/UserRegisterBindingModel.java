@@ -85,7 +85,7 @@ public class UserRegisterBindingModel {
 
     @NotNull
     @NotEmpty
-    @Length(min = 10, max = 10, message = UserRegistrationViolationMassages.USER_INCORRECT_PHONE_LENGTH)
+    @Length(min = 5, max = 13, message = UserRegistrationViolationMassages.USER_INCORRECT_PHONE_LENGTH)
     public String getPhoneNumber() {
         return this.phoneNumber;
     }

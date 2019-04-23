@@ -87,7 +87,7 @@ public class PizzaController extends BaseController {
             setCategoryViewList(modelAndView);
             setIngredientsViewList(modelAndView);
             modelAndView.addObject(BINDING_MODEL, bindingModel);
-            return view("moderator/pizza-add");
+            return view("moderator/pizza-all");
         }
 
 
@@ -108,6 +108,14 @@ public class PizzaController extends BaseController {
 
     @PostMapping("/delete/{id}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public ModelAndView deleteConfirm(@PathVariable String id) {
+
+        this.pizzaService.deleteById(id);
+
+        return redirect("/pizzas/all");
+    }
+
+
     private List<PizzaAllViewModel> setPizzaAllViewModels(List<PizzaServiceModel> pizzaServiceModels) {
         return pizzaServiceModels.stream()
                 .map(p -> {
